@@ -10,21 +10,26 @@ t.p
 
 case class Field(tiles:Array[Tile])
 
-val size = 4
+val sizeX = 9
+val sizeY = 3
 
-val field1 = Field(Array.ofDim(size * size))
+val field1 = Field(Array.ofDim(sizeX * sizeY))
 
-for (row <- 0 until size; column <- 0 until size) {
-  field1.tiles(column + (size * row)) = Tile(column, row, Piece("y"))
+for (row <- 0 until sizeX; column <- 0 until sizeY) {
+  field1.tiles(row + (sizeX * column)) = Tile(row, column, Piece("y"))
 }
 
-for (i <- 0 until size * size) {
+for (i <- 0 until sizeX * sizeY) {
   println(field1.tiles(i))
 }
 
 for (i <- field1.tiles) {
-  if (i.x == size - 1) println(i.p.p)
-  else print(i.p.p)
+  if (i.x == sizeX - 1){
+    println(i.p.p)
+  }
+  else{
+    print(i.p.p)
+  }
 }
 
 
