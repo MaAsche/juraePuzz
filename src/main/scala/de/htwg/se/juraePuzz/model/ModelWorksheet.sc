@@ -1,3 +1,5 @@
+import sun.awt.geom.Curve
+
 case class Piece(var p:String)
 
 case class Tile(x:Int, y:Int, p:Piece)
@@ -31,11 +33,18 @@ for (i <- field1.tiles) {
     print(i.p.p)
   }
 }
+class Rotation (var r:Int)
+
+case class Curve(var k:String,var r:Rotation,var pos:Int)
+
+class Stright(var s:String, var r:Rotation,var pos:Int)
+
+class StartPiece()
+
+class FinishPiece()
 
 
-
-
-
+val c1 = Curve("c",new Rotation(45),4);
 
 
 
