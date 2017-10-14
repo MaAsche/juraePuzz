@@ -1,4 +1,4 @@
-case class Piece(p:String)
+case class Piece(var p:String)
 
 case class Tile(x:Int, y:Int, p:Piece)
 
@@ -16,7 +16,7 @@ val sizeY = 3
 val field1 = Field(Array.ofDim(sizeX * sizeY))
 
 for (row <- 0 until sizeX; column <- 0 until sizeY) {
-  field1.tiles(row + (sizeX * column)) = Tile(row, column, Piece("y"))
+  field1.tiles(row + (sizeX * column)) = Tile(row, column, Piece("x"))
 }
 
 for (i <- 0 until sizeX * sizeY) {
