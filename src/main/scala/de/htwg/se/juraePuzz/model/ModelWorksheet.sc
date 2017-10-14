@@ -10,8 +10,8 @@ t.p
 
 case class Field(tiles:Array[Tile])
 
-val sizeX = 9
-val sizeY = 3
+val sizeX = 4
+val sizeY = 4
 
 val field1 = Field(Array.ofDim(sizeX * sizeY))
 
