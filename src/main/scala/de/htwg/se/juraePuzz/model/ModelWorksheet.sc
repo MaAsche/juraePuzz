@@ -32,7 +32,8 @@ val sizeY = 4
 val field1 = Field(Array.ofDim(sizeX * sizeY))
 
 for (row <- 0 until sizeX; column <- 0 until sizeY) {
-  field1.tiles(row + (sizeX * column)) = new Curve(")",new Rotation(45),new Point(column,row))
+  field1.tiles(row + (sizeX * column)) = new Curve("-",new Rotation(45),new Point(row,column))
+
 }
 
 for (i <- 0 until sizeX * sizeY) {
