@@ -9,6 +9,7 @@ bin/
 # Intellij
 .idea/
 target/
+build.properties
 
 # Maven
 log/
