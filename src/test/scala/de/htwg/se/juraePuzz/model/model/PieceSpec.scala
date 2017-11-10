@@ -1,8 +1,9 @@
-package de.htwg.se.juraePuzz.model
+package de.htwg.se.juraePuzz.model.model
 
+import de.htwg.se.juraePuzz.model.{Piece, Rotation}
 import org.junit.runner.RunWith
-import org.scalatest.{Matchers, WordSpec}
 import org.scalatest.junit.JUnitRunner
+import org.scalatest.{Matchers, WordSpec}
 
 @RunWith(classOf[JUnitRunner])
 class PieceSpec extends WordSpec with Matchers {

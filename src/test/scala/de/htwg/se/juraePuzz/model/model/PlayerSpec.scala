@@ -1,7 +1,8 @@
-package de.htwg.se.juraePuzz.model
+package de.htwg.se.juraePuzz.model.model
 
-import org.scalatest._
+import de.htwg.se.juraePuzz.model.Player
 import org.junit.runner.RunWith
+import org.scalatest._
 import org.scalatest.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])

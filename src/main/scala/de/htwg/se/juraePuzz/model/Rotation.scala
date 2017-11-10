@@ -1,5 +1,3 @@
 package de.htwg.se.juraePuzz.model
 
-class Rotation {
-
-}
+case class Rotation(r:Int)

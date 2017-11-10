@@ -1,5 +1,3 @@
 package de.htwg.se.juraePuzz.model
 
-class Piece {
-
-}
+case class Piece(s:String,r:Rotation)

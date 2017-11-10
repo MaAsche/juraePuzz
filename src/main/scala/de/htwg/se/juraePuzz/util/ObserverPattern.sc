@@ -1,4 +1,4 @@
-package de.htwg.se.sudoku.util
+package de.htwg.se.juraePuzz.util
 
 class TestObject extends Observer {
   def update:Unit = println("Ping")

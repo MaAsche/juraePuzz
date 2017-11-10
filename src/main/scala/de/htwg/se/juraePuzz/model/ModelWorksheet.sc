@@ -8,13 +8,15 @@ case class Matrix(size:Int) {
   def getSize():Int = size
 }
 
-case class Grid(size:Int){
+var m = Matrix(5)
+m.size
+m.fill(Piece("S", Rotation(0)), 0, 0)
+m.get(0,0)
+
+case class Level(s:String)
+
+case class Grid(size:Int,l:Level){
   val matrix = Matrix(size)
-  val kurve = Piece("K", Rotation(0))
-  val gerade = Piece("G", Rotation(0))
-  val start = Piece("S", Rotation(0))
-  val ende = Piece("E", Rotation(0))
-  val leer = Piece("0", Rotation(0))
   def print() = {
     for (i <- 0 until size; j <- 0 until size) {
       println(matrix.get(i,j))
@@ -23,7 +25,7 @@ case class Grid(size:Int){
 
   def init(): Unit = {
     for (i <- 0 until size; j <- 0 until size){
-      matrix.fill(leer, i, j)
+      matrix.fill(Piece("0", Rotation(0)), i, j)
     }
   }
 
@@ -39,12 +41,69 @@ case class Grid(size:Int){
   def fill(p:Piece, row:Int, col:Int): Unit = {
     matrix.fill(p, row, col)
   }
+
+  def move(xS:Int, yS:Int, xT:Int, yT:Int): Unit = {
+    if (checkMove(xS, yS, xT, yT)) {
+      val pS = matrix.get(xS, yS)
+      val pT = matrix.get(xT, yT)
+      matrix.fill(pS, xT, yT)
+      matrix.fill(pT, xS, yS)
+    } else {
+      println("ungültig")
+    }
+  }
+
+  def checkMove(xS:Int, yS:Int, xT:Int, yT:Int): Boolean = {
+    if (xS >= matrix.size ||
+      xT >= matrix.size ||
+      yS >= matrix.size ||
+      yT >= matrix.size) {
+      return false
+    }
+
+    val pT = matrix.get(xT, yT)
+
+    if (xS == xT) {
+      if (yS - yT == -1 || yS - yT == 1) {
+        if (pT.s == "0"){
+          return true
+        }
+
+      }
+    }
+
+    if (yS == yT) {
+      if (xS - xT == -1 || xS - xT == 1) {
+        if (pT.s == "0"){
+          return true
+        }
+      }
+    }
+    false
+  }
+
+  def solve(): Boolean = {
+    val sb = new StringBuilder()
+    for (i <- 0 until matrix.getSize(); j <- 0 until matrix.getSize()){
+      sb.append(matrix.get(i,j))
+    }
+    Level(sb.toString()).s.equals(l.s)
+  }
 }
 
-val g = Grid(4)
+val g = Grid(2, Level("E0G0"))
 g.init()
 g.fill(Piece("S", Rotation(0)), 0, 0)
+g.fill(Piece("E",Rotation(0)),0,0)
+g.fill(Piece("G",Rotation(0)),1,1)
+g.move(1,1, 1, 0)
+g.move(0,0, 0, 2)
+g.move(0,1,1,1)
 g.render()
 
+g.solve()
+
+
+val l = Level("")
 
 

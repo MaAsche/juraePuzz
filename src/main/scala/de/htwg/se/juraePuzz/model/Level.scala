@@ -1,5 +1,3 @@
 package de.htwg.se.juraePuzz.model
 
-class Level {
-
-}
+case class Level(s:String)
