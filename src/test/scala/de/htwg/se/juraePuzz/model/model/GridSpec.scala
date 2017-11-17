@@ -8,7 +8,7 @@ import org.scalatest.{Matchers, WordSpec}
 @RunWith(classOf[JUnitRunner])
 class GridSpec extends WordSpec with Matchers {
     "A grid" should {
-      val g = Grid(2)
+      val g = new Grid(2)
       "have a size" in {
         g.getSize() should be(2)
       }

@@ -1,7 +1,9 @@
 package de.htwg.se.juraePuzz.model
 
-case class Grid(size:Int) {
+class Grid(size:Int) {
   val matrix = Matrix(size)
+
+
   def init(): Unit = {
     for (i <- 0 until size; j <- 0 until size){
       matrix.fill(Piece("0", Rotation(0)), i, j)
