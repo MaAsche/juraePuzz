@@ -1,3 +1,6 @@
+[![Travis](https://travis-ci.org/judiet/juraePuzz.svg?branch=master)]()
+
+
 htwg-scala-seed
 =========================
 
