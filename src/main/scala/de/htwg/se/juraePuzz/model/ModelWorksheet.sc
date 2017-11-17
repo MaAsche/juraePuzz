@@ -8,14 +8,9 @@ case class Matrix(size:Int) {
   def getSize():Int = size
 }
 
-var m = Matrix(5)
-m.size
-m.fill(Piece("S", Rotation(0)), 0, 0)
-m.get(0,0)
 
-case class Level(s:String)
 
-case class Grid(size:Int,l:Level){
+case class Grid(size:Int){
   val matrix = Matrix(size)
   def print() = {
     for (i <- 0 until size; j <- 0 until size) {
@@ -82,28 +77,48 @@ case class Grid(size:Int,l:Level){
     false
   }
 
-  def solve(): Boolean = {
-    val sb = new StringBuilder()
-    for (i <- 0 until matrix.getSize(); j <- 0 until matrix.getSize()){
-      sb.append(matrix.get(i,j))
+  def fill(l:Level): Unit = {
+    for (i <- 0 until matrix.getSize(); j <- 0 until matrix.getSize()) {
+      matrix.fill(Piece(l.s.charAt(j + i * matrix.getSize()).toString, Rotation(0)), i, j)
     }
-    Level(sb.toString()).s.equals(l.s)
   }
 }
 
-val g = Grid(2, Level("E0G0"))
+case class Level(s:String){
+  def length(): Int = s.length
+}
+class Solver (g:Grid,l:Level){
+
+  def solve(): Level = {
+    val sb = new StringBuilder()
+    for (i <- 0 until g.matrix.getSize(); j <- 0 until g.matrix.getSize()) {
+      sb.append(g.matrix.get(i, j).s)
+    }
+    println(sb.toString())
+    Level(sb.toString())
+  }
+  def check_level(): Boolean ={
+    if(l.length() == solve().length()){
+      println("l "+l.s)
+      println("solöe "+solve().s)
+      l.s.equals(solve().s)
+    }else{
+      false
+    }
+
+  }
+}
+val level = Level("SK00E0000")
+
+val g = Grid(3)
 g.init()
-g.fill(Piece("S", Rotation(0)), 0, 0)
-g.fill(Piece("E",Rotation(0)),0,0)
-g.fill(Piece("G",Rotation(0)),1,1)
-g.move(1,1, 1, 0)
-g.move(0,0, 0, 2)
-g.move(0,1,1,1)
+g.fill(level)
+
 g.render()
 
-g.solve()
+val solver = new Solver(g,level)
+solver.check_level()
 
 
-val l = Level("")
 
 

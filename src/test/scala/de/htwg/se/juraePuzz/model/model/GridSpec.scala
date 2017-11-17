@@ -1,8 +1,6 @@
 package de.htwg.se.juraePuzz.model.model
 
-import de.htwg.se.juraePuzz.model.Grid
-import de.htwg.se.juraePuzz.model.Piece
-import de.htwg.se.juraePuzz.model.Rotation
+import de.htwg.se.juraePuzz.model.{Grid, Level, Piece, Rotation}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.{Matchers, WordSpec}
@@ -51,6 +49,13 @@ class GridSpec extends WordSpec with Matchers {
       }
       "renderd" in {
         g.render() should be(())
+      }
+      "generateGrid with Level" in {
+        g.fill(Level("SKE0"))
+        g.matrix.get(0,0).s should be ("S")
+        g.matrix.get(0,1).s should be ("K")
+        g.matrix.get(1,0).s should be ("E")
+        g.matrix.get(1,1).s should be ("0")
       }
     }
 }

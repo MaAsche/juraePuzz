@@ -25,6 +25,12 @@ case class Grid(size:Int) {
     matrix.fill(p, row, col)
   }
 
+  def fill(l:Level): Unit = {
+    for (i <- 0 until matrix.getSize(); j <- 0 until matrix.getSize()){
+      matrix.fill(Piece(l.s.charAt(j + i * matrix.getSize()).toString,Rotation(0)),i,j)
+    }
+  }
+
   def move(xS:Int, yS:Int, xT:Int, yT:Int): Unit = {
     if (checkMove(xS, yS, xT, yT)) {
       val pS = matrix.get(xS, yS)
@@ -73,7 +79,7 @@ case class Grid(size:Int) {
   def solve(): Level = {
     val sb = new StringBuilder()
     for (i <- 0 until matrix.getSize(); j <- 0 until matrix.getSize()){
-      sb.append(matrix.get(i,j))
+      sb.append(matrix.get(i,j).s)
     }
     Level(sb.toString())
   }
