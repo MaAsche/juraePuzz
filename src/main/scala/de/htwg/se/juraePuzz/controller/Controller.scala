@@ -3,12 +3,12 @@ package de.htwg.se.juraePuzz.controller
 import de.htwg.se.juraePuzz.model.{Grid, Solver}
 import de.htwg.se.juraePuzz.model.Level
 import de.htwg.se.juraePuzz.util.Observable
+import de.htwg.se.juraePuzz.controller.GameStatus._
 
 class Controller(var grid: Grid) extends Observable {
-  grid.init()
+  var gamestatus: GameStatus = IDLE
   def create_empty_grid(size:Int): Unit ={
     grid = new Grid(size)
-    grid.init()
     notifyObservers
   }
 
@@ -23,17 +23,20 @@ class Controller(var grid: Grid) extends Observable {
     }
     notifyObservers
   }
+
+
   def move(xS:Int, yS:Int, xT:Int, yT:Int) = {
-    grid.move(xS, yS, xT, yT)
-    notifyObservers
-    if (new Solver(grid, Level("S00G00E00")).check_level()) {
-      println("Level solved!")
+    if (grid.move(xS, yS, xT, yT)) {
+      if (new Solver(grid, Level("S00G00E00")).check_level()) {
+        gamestatus = SOLVED
+      } else {
+        gamestatus = NOT_SOLVED_YET
+      }
+    } else {
+      gamestatus = ILLEGAL_TURN
     }
+
+
+    notifyObservers
   }
-
-  def render_grid() = {
-    grid.render()
-  }
-
-
 }

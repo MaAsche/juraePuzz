@@ -4,8 +4,10 @@ class Grid(size:Int) {
   val matrix = Matrix(size)
 
 
-  def init(): Unit = {
-    for (i <- 0 until size; j <- 0 until size){
+  empty()
+
+  def empty(): Unit = {
+    for (i <- 0 until size; j <- 0 until size) {
       matrix.fill(Piece("0", Rotation(0)), i, j)
     }
   }
@@ -14,13 +16,15 @@ class Grid(size:Int) {
     matrix.getSize()
   }
 
-  def render(): Unit = {
+  override def toString(): String = {
+    val sb = new StringBuilder()
     for (i <- 0 until matrix.getSize(); j <- 0 until matrix.getSize()){
-      printf("%s", matrix.get(i,j).s)
+      sb.append(matrix.get(i,j).s)
       if (j == matrix.getSize() - 1) {
-        println("")
+        sb.append("\n")
       }
     }
+    sb.toString()
   }
 
   def fill(p:Piece, row:Int, col:Int): Unit = {
@@ -33,14 +37,15 @@ class Grid(size:Int) {
     }
   }
 
-  def move(xS:Int, yS:Int, xT:Int, yT:Int): Unit = {
+  def move(xS:Int, yS:Int, xT:Int, yT:Int): Boolean = {
     if (checkMove(xS, yS, xT, yT)) {
       val pS = matrix.get(xS, yS)
       val pT = matrix.get(xT, yT)
       matrix.fill(pS, xT, yT)
       matrix.fill(pT, xS, yS)
+      true
     } else {
-      println("ungültig")
+     false
     }
   }
 
@@ -64,7 +69,6 @@ class Grid(size:Int) {
         if (pT.s == "0"){
           return true
         }
-
       }
     }
 
@@ -75,7 +79,7 @@ class Grid(size:Int) {
         }
       }
     }
-    false
+   false
   }
 
   def solve(): Level = {

@@ -1,9 +1,8 @@
 package de.htwg.se.juraePuzz.aview
 
-import de.htwg.se.juraePuzz.controller.Controller
-import de.htwg.se.juraePuzz.model.Grid
+import de.htwg.se.juraePuzz.controller.{Controller, GameStatus}
 import de.htwg.se.juraePuzz.util.Observer
-import de.htwg.se.juraePuzz.util.Observer
+import de.htwg.se.juraePuzz.controller.GameStatus._
 
 class Tui (controller: Controller) extends Observer{
 
@@ -22,6 +21,9 @@ class Tui (controller: Controller) extends Observer{
     }
   }
 
-  override def update: Unit = controller.render_grid()
-
+  override def update: Unit = {
+    println(controller.grid)
+    println(GameStatus.message(controller.gamestatus))
+    controller.gamestatus = IDLE
+  }
 }

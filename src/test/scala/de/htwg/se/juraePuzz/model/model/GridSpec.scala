@@ -13,7 +13,7 @@ class GridSpec extends WordSpec with Matchers {
         g.getSize() should be(2)
       }
       "have Pieces" in {
-        g.init()
+        g.empty()
         g.matrix.get(0, 0) should be(Piece("0", Rotation(0)))
         g.matrix.get(0, 1) should be(Piece("0", Rotation(0)))
         g.matrix.get(1, 0) should be(Piece("0", Rotation(0)))
@@ -30,25 +30,23 @@ class GridSpec extends WordSpec with Matchers {
         g.matrix.get(1, 1) should be(Piece("K", Rotation(0)))
       }
       "be edited" in {
-        g.init()
+        g.empty()
         g.fill(Piece("K", Rotation(0)), 1, 1)
         g.checkMove(1, 1, 1, 0) should be(true)
         g.checkMove(0, 0, 1, 1) should be(false)
-        g.checkMove(1,1, 0, 1) should be(true)
-        g.checkMove(2,1,2,0) should be(false)
+        g.checkMove(1, 1, 0, 1) should be(true)
+        g.checkMove(2, 1, 2, 0) should be(false)
         g.fill(Piece("S", Rotation(0)), 0, 0)
         g.checkMove(0, 0, 0, 1) should be(false)
+        g.checkMove(1, 1, 0, 0) should be(false)
       }
       "move correct" in {
-        g.init()
+        g.empty()
         g.fill(Piece("K", Rotation(0)), 0, 0)
         g.move(0, 0, 0, 1)
         g.matrix.get(0,0) should be(Piece("0", Rotation(0)))
         g.matrix.get(0, 1) should be (Piece("K", Rotation(0)))
-        g.move(0,0, 1,0) should be (())
-      }
-      "renderd" in {
-        g.render() should be(())
+        g.move(0,0, 1,0) should be (false)
       }
       "generateGrid with Level" in {
         g.fill(Level("SKE0"))
@@ -56,6 +54,15 @@ class GridSpec extends WordSpec with Matchers {
         g.matrix.get(0,1).s should be ("K")
         g.matrix.get(1,0).s should be ("E")
         g.matrix.get(1,1).s should be ("0")
+      }
+      "a solution" in {
+        val l = Level("0000")
+        val grid = new Grid(2)
+        grid.solve().s should be(l.s)
+      }
+      "a string representation" in {
+        val grid = new Grid(2)
+        grid.toString() should be ("00\n00\n")
       }
     }
 }
