@@ -1,5 +1,6 @@
 [![Travis](https://travis-ci.org/judiet/juraePuzz.svg?branch=master)]()
 
+[![Coverage Status](https://coveralls.io/repos/github/judiet/juraePuzz/badge.svg?branch=master)](https://coveralls.io/github/judiet/juraePuzz?branch=master)
 
 htwg-scala-seed
 =========================

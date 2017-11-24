@@ -91,7 +91,7 @@ class Solver (g:Grid,l:Level){
 
   def solve(): Level = {
     val sb = new StringBuilder()
-    for (i <- 0 until g.matrix.getSize(); j <- 0 until g.matrix.getSize()) {
+    for (i <- 0 until g.size; j <- 0 until g.size) {
       sb.append(g.matrix.get(i, j).s)
     }
     println(sb.toString())
