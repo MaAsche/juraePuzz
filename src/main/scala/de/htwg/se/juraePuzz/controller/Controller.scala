@@ -2,11 +2,14 @@ package de.htwg.se.juraePuzz.controller
 
 import de.htwg.se.juraePuzz.model.{Grid, Solver}
 import de.htwg.se.juraePuzz.model.Level
-import de.htwg.se.juraePuzz.util.Observable
+import de.htwg.se.juraePuzz.util.{Observable, UndoManager}
 import de.htwg.se.juraePuzz.controller.GameStatus._
 
 class Controller(var grid: Grid) extends Observable {
-  var gamestatus: GameStatus = IDLE
+
+  var gameStatus: GameStatus = IDLE
+  val undoManager = new UndoManager
+
   def create_empty_grid(size:Int): Unit ={
     grid = new Grid(size)
     notifyObservers
@@ -24,19 +27,27 @@ class Controller(var grid: Grid) extends Observable {
     notifyObservers
   }
 
-
   def move(xS:Int, yS:Int, xT:Int, yT:Int) = {
-    if (grid.move(xS, yS, xT, yT)) {
+    if (undoManager.doStep(new SetCommand(xS, yS, xT, yT, this))) {
+
       if (new Solver(grid, Level("S00G00E00")).check_level()) {
-        gamestatus = SOLVED
+        gameStatus = SOLVED
       } else {
-        gamestatus = NOT_SOLVED_YET
+        gameStatus = NOT_SOLVED_YET
       }
     } else {
-      gamestatus = ILLEGAL_TURN
+      gameStatus = ILLEGAL_TURN
     }
+    notifyObservers
+  }
 
+  def undo: Unit = {
+    undoManager.undoStep
+    notifyObservers
+  }
 
+  def redo: Unit = {
+    undoManager.redoStep
     notifyObservers
   }
 }

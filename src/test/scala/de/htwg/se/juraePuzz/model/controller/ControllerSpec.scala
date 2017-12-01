@@ -10,8 +10,8 @@ import de.htwg.se.juraePuzz.util.{Observable, Observer}
 @RunWith(classOf[JUnitRunner])
 class ControllerSpec extends WordSpec with Matchers {
   "A Controller" should {
-    val grid = new Grid(2)
-    val controller = new Controller(grid)
+    var grid = new Grid(2)
+    var controller = new Controller(grid)
 
     val observer = new Observer {
       var updated: Boolean = false
@@ -27,9 +27,10 @@ class ControllerSpec extends WordSpec with Matchers {
       controller.grid.getSize() should be (2)
     }
     "notify its Observer after created a Level" in {
+      controller.create_empty_grid(3)
       controller.create_Level(1)
       observer.updated should be (true)
-      controller.grid.getSize() should be (2)
+      controller.grid.toString() should be ("S00\nK0E\n000\n")
     }
   }
 }

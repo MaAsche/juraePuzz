@@ -31,9 +31,16 @@ class Grid(size:Int) {
     matrix.fill(p, row, col)
   }
 
-  def fill(l:Level): Unit = {
-    for (i <- 0 until matrix.getSize(); j <- 0 until matrix.getSize()){
-      matrix.fill(Piece(l.s.charAt(j + i * matrix.getSize()).toString,Rotation(0)),i,j)
+  def fill(l:Level): Boolean = {
+    println(l.s.length())
+    println(size * size)
+    if (l.s.length() == size * size) {
+      for (i <- 0 until matrix.getSize(); j <- 0 until matrix.getSize()) {
+        matrix.fill(Piece(l.s.charAt(j + i * matrix.getSize()).toString, Rotation(0)), i, j)
+      }
+      true
+    } else {
+      false
     }
   }
 
