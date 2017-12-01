@@ -81,12 +81,4 @@ class Grid(size:Int) {
     }
    false
   }
-
-  def solve(): Level = {
-    val sb = new StringBuilder()
-    for (i <- 0 until matrix.getSize(); j <- 0 until matrix.getSize()){
-      sb.append(matrix.get(i,j).s)
-    }
-    Level(sb.toString())
-  }
 }

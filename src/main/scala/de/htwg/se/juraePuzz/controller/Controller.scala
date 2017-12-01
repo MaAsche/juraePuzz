@@ -12,7 +12,7 @@ class Controller(var grid: Grid) extends Observable {
     notifyObservers
   }
 
-  def crate_Level(i:Int): Unit ={
+  def create_Level(i:Int): Unit ={
     val level1 = Level("S00K0E000")
     val level2 = Level("S0000GE00")
     val level3 = Level("GE000K00S")

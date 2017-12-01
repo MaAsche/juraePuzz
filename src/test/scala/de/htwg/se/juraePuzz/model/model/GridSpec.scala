@@ -55,11 +55,6 @@ class GridSpec extends WordSpec with Matchers {
         g.matrix.get(1,0).s should be ("E")
         g.matrix.get(1,1).s should be ("0")
       }
-      "a solution" in {
-        val l = Level("0000")
-        val grid = new Grid(2)
-        grid.solve().s should be(l.s)
-      }
       "a string representation" in {
         val grid = new Grid(2)
         grid.toString() should be ("00\n00\n")
