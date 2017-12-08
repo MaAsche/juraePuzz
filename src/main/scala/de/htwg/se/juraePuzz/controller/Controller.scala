@@ -1,7 +1,6 @@
 package de.htwg.se.juraePuzz.controller
 
-import de.htwg.se.juraePuzz.model.{Grid, Solver}
-import de.htwg.se.juraePuzz.model.Level
+import de.htwg.se.juraePuzz.model.{GetSpecifiedLevel, Grid, Level, Solver}
 import de.htwg.se.juraePuzz.util.{Observable, UndoManager}
 import de.htwg.se.juraePuzz.controller.GameStatus._
 
@@ -16,13 +15,11 @@ class Controller(var grid: Grid) extends Observable {
   }
 
   def create_Level(i:Int): Unit ={
-    val level1 = Level("S00K0E000")
-    val level2 = Level("S0000GE00")
-    val level3 = Level("GE000K00S")
-    i match {
-      case 1 => grid.fill(level1)
-      case 2 => grid.fill(level2)
-      case 3 => grid.fill(level3)
+    var st1 = new GetSpecifiedLevel()
+    if (grid.fill(st1.createLevel(i))) {
+      gameStatus = CREATE_LEVEL
+    } else {
+      gameStatus = NOT_CREATED_LEVEL
     }
     notifyObservers
   }
