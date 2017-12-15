@@ -1,54 +1,39 @@
 package de.htwg.se.juraePuzz.aview.Gui
 
-import de.htwg.se.juraePuzz.controller.Controller
 
+import de.htwg.se.juraePuzz.controller.{Controller}
 import scala.swing._
 import scala.swing.event.MouseClicked
 
 class SwingGui(controller: Controller) extends Frame{
   title = "juraePuzz"
 
-  var cellPanel = new GridPanel(controller.grid.getSize(), controller.grid.getSize()) {
+  var cells = Array.ofDim[PiecePanel](controller.grid.getSize(), controller.grid.getSize())
+
+  def gridPanel = new GridPanel(controller.grid.getSize(), controller.grid.getSize()) {
+
     for {
       row <- 0 until controller.grid.getSize()
       col <- 0 until controller.grid.getSize()
     } {
-      contents += new BoxPanel(Orientation.Vertical) {
-        contents += new Label{
-          text = controller.grid.matrix.get(row, col).s
-          font = new Font("OLDENGL", 1, 40)
-        }
-        preferredSize = new Dimension(51, 51)
-        border = Swing.BeveledBorder(Swing.Raised)
-        listenTo(mouse.clicks)
+        val piecePanel = new PiecePanel(row, col, controller)
+        cells(row)(col) = piecePanel
+        contents += piecePanel
+        listenTo(piecePanel)
       }
-    }
   }
 
   def buttonPanel = new FlowPanel{
     contents += new Button("New") {
       listenTo(mouse.clicks)
       reactions += {
-        case e: MouseClicked =>
+        case e: MouseClicked =>{
           controller.create_Level(1)
-          cellPanel = new GridPanel(controller.grid.getSize(), controller.grid.getSize()) {
-            for {
-              row <- 0 until controller.grid.getSize()
-              col <- 0 until controller.grid.getSize()
-            } {
-              contents += new BoxPanel(Orientation.Vertical) {
-                contents += new Label{
-                  text = controller.grid.matrix.get(row, col).s
-                  font = new Font("OLDENGL", 1, 40)
-                }
-                preferredSize = new Dimension(51, 51)
-                border = Swing.BeveledBorder(Swing.Raised)
-                listenTo(mouse.clicks)
-              }
-            }
-          }
+          redraw
+        }
       }
     }
+
     contents += new Button("Quit"){
       listenTo(mouse.clicks)
       reactions += {
@@ -61,8 +46,19 @@ class SwingGui(controller: Controller) extends Frame{
   }
   contents = new BorderPanel {
     add(buttonPanel, BorderPanel.Position.North)
-    add(cellPanel, BorderPanel.Position.Center)
+    add(gridPanel, BorderPanel.Position.Center)
   }
+   visible = true
 
-  visible = true
+  def redraw = {
+    for {
+      row <- 0 until controller.grid.getSize()
+      col <- 0 until controller.grid.getSize()
+    } cells(row)(col).redraw
+    resizable = false
+    resizable = true
+    repaint
+  }
 }
+
+
