@@ -62,6 +62,13 @@ class Grid(size:Int) {
       return false
     }
 
+    if (xS < 0 ||
+    yS < 0 ||
+    xT < 0 ||
+    yT <0) {
+      return false
+    }
+
     val pT = matrix.get(xT, yT)
     val pS = matrix.get(xS, yS)
 

@@ -1,10 +1,14 @@
 package de.htwg.se.juraePuzz.controller
 
+import de.htwg.se.juraePuzz.aview.Gui.CellChanged
 import de.htwg.se.juraePuzz.model.{GetSpecifiedLevel, Grid, Level, Solver}
 import de.htwg.se.juraePuzz.util.{Observable, UndoManager}
 import de.htwg.se.juraePuzz.controller.GameStatus._
 
-class Controller(var grid: Grid) extends Observable {
+import scala.swing.Publisher
+import scala.swing.event.Event
+
+class Controller(var grid: Grid) extends Observable with Publisher{
 
   var gameStatus: GameStatus = IDLE
   val undoManager = new UndoManager
@@ -12,7 +16,12 @@ class Controller(var grid: Grid) extends Observable {
   def create_empty_grid(size:Int): Unit ={
     grid = new Grid(size)
     notifyObservers
+    toggleShow
   }
+
+  def toggleShow() = publish(new CellChanged)
+
+  def statusText: String = GameStatus.message(gameStatus)
 
   def create_Level(i:Int): Unit ={
     var st1 = new GetSpecifiedLevel()
@@ -22,11 +31,11 @@ class Controller(var grid: Grid) extends Observable {
       gameStatus = NOT_CREATED_LEVEL
     }
     notifyObservers
+    toggleShow()
   }
 
   def move(xS:Int, yS:Int, xT:Int, yT:Int) = {
     if (undoManager.doStep(new SetCommand(xS, yS, xT, yT, this))) {
-
       if (new Solver(grid, Level("S00G00E00")).check_level()) {
         gameStatus = SOLVED
       } else {
@@ -36,15 +45,19 @@ class Controller(var grid: Grid) extends Observable {
       gameStatus = ILLEGAL_TURN
     }
     notifyObservers
+    toggleShow()
+
   }
 
   def undo: Unit = {
     undoManager.undoStep
     notifyObservers
+    toggleShow
   }
 
   def redo: Unit = {
     undoManager.redoStep
     notifyObservers
+    toggleShow
   }
 }

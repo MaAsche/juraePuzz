@@ -25,7 +25,6 @@ class Tui (controller: Controller) extends Observer{
 
   override def update: Unit = {
     println(controller.grid)
-    println(GameStatus.message(controller.gameStatus))
-    controller.gameStatus = IDLE
+    println(controller.statusText)
   }
 }
