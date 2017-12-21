@@ -49,16 +49,14 @@ class GridSpec extends WordSpec with Matchers {
         g.move(0,0, 1,0) should be (false)
       }
       "generateGrid with Level" in {
-        g.fill(Level("SKE0"))
+        g.fill(Level("SKE0")) should be (true)
         g.matrix.get(0,0).s should be ("S")
         g.matrix.get(0,1).s should be ("K")
         g.matrix.get(1,0).s should be ("E")
         g.matrix.get(1,1).s should be ("0")
       }
-      "a solution" in {
-        val l = Level("0000")
-        val grid = new Grid(2)
-        grid.solve().s should be(l.s)
+      "not be filled with illegal Levelsize" in {
+        g.fill(Level("SKE00")) should be(false)
       }
       "a string representation" in {
         val grid = new Grid(2)

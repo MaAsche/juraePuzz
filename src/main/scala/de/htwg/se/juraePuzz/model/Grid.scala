@@ -13,14 +13,14 @@ class Grid(size:Int) {
   }
 
   def getSize():Int = {
-    matrix.getSize()
+    matrix.size
   }
 
   override def toString(): String = {
     val sb = new StringBuilder()
-    for (i <- 0 until matrix.getSize(); j <- 0 until matrix.getSize()){
+    for (i <- 0 until matrix.size; j <- 0 until matrix.size){
       sb.append(matrix.get(i,j).s)
-      if (j == matrix.getSize() - 1) {
+      if (j == matrix.size - 1) {
         sb.append("\n")
       }
     }
@@ -31,9 +31,14 @@ class Grid(size:Int) {
     matrix.fill(p, row, col)
   }
 
-  def fill(l:Level): Unit = {
-    for (i <- 0 until matrix.getSize(); j <- 0 until matrix.getSize()){
-      matrix.fill(Piece(l.s.charAt(j + i * matrix.getSize()).toString,Rotation(0)),i,j)
+  def fill(l:Level): Boolean = {
+    if (l.s.length() == size * size) {
+      for (i <- 0 until matrix.size; j <- 0 until matrix.size) {
+        matrix.fill(Piece(l.s.charAt(j + i * matrix.size).toString, Rotation(0)), i, j)
+      }
+      true
+    } else {
+      false
     }
   }
 
@@ -80,13 +85,5 @@ class Grid(size:Int) {
       }
     }
    false
-  }
-
-  def solve(): Level = {
-    val sb = new StringBuilder()
-    for (i <- 0 until matrix.getSize(); j <- 0 until matrix.getSize()){
-      sb.append(matrix.get(i,j).s)
-    }
-    Level(sb.toString())
   }
 }
