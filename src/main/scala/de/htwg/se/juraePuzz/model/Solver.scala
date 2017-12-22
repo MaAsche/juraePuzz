@@ -1,16 +1,25 @@
 package de.htwg.se.juraePuzz.model
 
-class Solver(g:Grid,l:Level) {
+import scala.util.Sorting
+
+class Solver(g:Grid) {
   def solve(): Level = {
-    val sb = new StringBuilder()
+    var sb = Array.ofDim[Int](g.getSize() * g.getSize())
     for (i <- 0 until g.matrix.size; j <- 0 until g.matrix.size) {
-      sb.append(g.matrix.get(i, j).s)
+      sb(j + i * g.getSize()) = (g.matrix.get(i, j).s)
     }
-    Level(sb.toString())
+
+    Sorting.quickSort(sb)
+    for (i <- 0 until sb.length-1){
+      sb(i)=sb(i+1)
+    }
+    sb(sb.length-1)=0
+    Level(sb)
   }
   def check_level(): Boolean ={
+    val l = g.getLevel()
     if(l.length() == solve().length()){
-      l.s.equals(solve().s)
+      l.s.corresponds(solve().s){_ == _}
     }else{
       false
     }

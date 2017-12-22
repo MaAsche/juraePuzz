@@ -19,7 +19,7 @@ class PiecePanel (row: Int, column: Int, controller: Controller) extends FlowPan
 
   val label =
     new Label {
-      text = pieceText
+      text = pieceText.toString
       font = new Font("OLDENGL", 1, 36)
     }
 
@@ -90,7 +90,7 @@ class PiecePanel (row: Int, column: Int, controller: Controller) extends FlowPan
     if (clicked) {
       contents += candidates
     }else{
-      label.text = pieceText
+      label.text = pieceText.toString
       contents += piece
     }
     repaint

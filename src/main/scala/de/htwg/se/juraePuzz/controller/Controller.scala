@@ -23,9 +23,9 @@ class Controller(var grid: Grid) extends Observable with Publisher{
 
   def statusText: String = GameStatus.message(gameStatus)
 
-  def create_Level(i:Int): Unit ={
+  def create_Level(): Unit ={
     var st1 = new GetSpecifiedLevel()
-    if (grid.fill(st1.createLevel(i))) {
+    if (grid.fill(st1.createLevel(this))) {
       gameStatus = CREATE_LEVEL
     } else {
       gameStatus = NOT_CREATED_LEVEL
@@ -36,7 +36,7 @@ class Controller(var grid: Grid) extends Observable with Publisher{
 
   def move(xS:Int, yS:Int, xT:Int, yT:Int) = {
     if (undoManager.doStep(new SetCommand(xS, yS, xT, yT, this))) {
-      if (new Solver(grid, Level("S00G00E00")).check_level()) {
+      if (new Solver(grid).check_level()) {
         gameStatus = SOLVED
       } else {
         gameStatus = NOT_SOLVED_YET
@@ -59,5 +59,12 @@ class Controller(var grid: Grid) extends Observable with Publisher{
     undoManager.redoStep
     notifyObservers
     toggleShow
+  }
+
+  def solve(): Unit ={
+    grid.solve()
+    gameStatus = SOLVED
+    notifyObservers
+    toggleShow()
   }
 }

@@ -9,8 +9,8 @@ import org.scalatest.{Matchers, WordSpec}
 class LevelSpec extends WordSpec with Matchers {
   "A Level" should {
     "have a value" in {
-      Level("0").s should be("0")
-      Level("0").length() should be (1)
+      Level(Array(0)).s should be(Array(0))
+      Level(Array(0)).length() should be (1)
     }
   }
 }

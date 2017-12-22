@@ -1,12 +1,16 @@
 package de.htwg.se.juraePuzz.model
 
+import de.htwg.se.juraePuzz.controller.Controller
+
+import scala.collection.mutable.ListBuffer
+
 class GetSpecifiedLevel extends LevelGenerateStrategyTemplate {
-  override def createLevel(nr: Int): Level = {
-    nr match {
-      case 1 => Level("S00K0E000")
-      case 2 => Level("S0000GE00")
-      case 3 => Level("GE000K00S")
-      case _ => Level("000000000")
+  override def createLevel(controller: Controller): Level = {
+    val size = controller.grid.getSize()*controller.grid.getSize()
+    var l = Array.ofDim[Int](size)
+    for (i <- 0 until (size) - 1) {
+      l(i)=((Math.random() * size).toInt + 1)
     }
+    Level(l)
   }
 }

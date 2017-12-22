@@ -3,7 +3,7 @@ package de.htwg.se.juraePuzz.model.model
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.{Matchers, WordSpec}
-import de.htwg.se.juraePuzz.model.Grid
+import de.htwg.se.juraePuzz.model.{Grid, Solver}
 import de.htwg.se.juraePuzz.controller.{Controller, GameStatus}
 import de.htwg.se.juraePuzz.util.{Observable, Observer}
 
@@ -28,30 +28,26 @@ class ControllerSpec extends WordSpec with Matchers {
     }
     "notify its Observer after created a Level" in {
       controller.create_empty_grid(3)
-      controller.create_Level(1)
+      controller.create_Level()
       observer.updated should be (true)
-      controller.grid.toString() should be ("S00\nK0E\n0G0\n")
-    }
-    "should have status not created" in {
-      controller.create_empty_grid(4)
-      controller.create_Level(1)
-      controller.gameStatus should be (GameStatus.NOT_CREATED_LEVEL)
+      controller.grid.toString() should be (controller.grid.getLevel().toString)
     }
     "should have status solved" in {
       controller.create_empty_grid(3)
-      controller.create_Level(1)
-      controller.move(2, 1, 1, 1)
+      controller.create_Level()
+      val solver = new Solver(controller.grid)
+      controller.solve()
       controller.gameStatus should be (GameStatus.SOLVED)
     }
     "should have status illegal turn" in {
       controller.create_empty_grid(3)
-      controller.create_Level(1)
+      controller.create_Level()
       controller.move(2, 1, 1, 2)
       controller.gameStatus should be (GameStatus.ILLEGAL_TURN)
     }
     "should have status not solved yet" in {
       controller.create_empty_grid(3)
-      controller.create_Level(1)
+      controller.create_Level()
       controller.move(2, 1, 2, 2)
       controller.gameStatus should be (GameStatus.NOT_SOLVED_YET)
     }

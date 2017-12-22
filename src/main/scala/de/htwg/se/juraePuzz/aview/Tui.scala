@@ -15,7 +15,8 @@ class Tui (controller: Controller) extends Observer{
       case "q" =>
       case "z" => controller.undo
       case "y" => controller.redo
-      case "c" => controller.create_Level(2)
+      case "c" => controller.create_Level()
+      case "s" => controller.solve()
       case _ => input.toList.filter(c => c != ' ').map(c => c.toString.toInt) match {
         case xS :: yS :: xT :: yT :: Nil => controller.move(xS, yS, xT, yT)
         case _ =>

@@ -11,14 +11,12 @@ class SolverSpec extends WordSpec with Matchers {
 
   "A Solver" should {
     val grid = new Grid(2)
-    val solver = new Solver(grid,Level("0000"))
+    val solver = new Solver(grid)
     "generate out of a matrix a Level" in {
-      solver.solve().s should be ("0000")
+      solver.solve().s should be (Array(0,0,0,0))
     }
     "checks that the current matirx ist solved or not" in {
       solver.check_level() should be (true)
-      val solver1 = new Solver(grid,Level("000000000"))
-      solver1.check_level() should be (false)
     }
   }
 }

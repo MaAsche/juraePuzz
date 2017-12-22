@@ -33,7 +33,7 @@ class SwingGui(controller: Controller) extends Frame{
       listenTo(mouse.clicks)
       reactions += {
         case e: MouseClicked =>{
-          controller.create_Level(1)
+          controller.create_Level()
           redraw
         }
       }
