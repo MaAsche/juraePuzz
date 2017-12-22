@@ -3,7 +3,7 @@ package de.htwg.se.juraePuzz.model.model
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.{Matchers, WordSpec}
-import de.htwg.se.juraePuzz.model.{Grid, Solver}
+import de.htwg.se.juraePuzz.model.{Grid, Level, Solver}
 import de.htwg.se.juraePuzz.controller.{Controller, GameStatus}
 import de.htwg.se.juraePuzz.util.{Observable, Observer}
 
@@ -39,6 +39,12 @@ class ControllerSpec extends WordSpec with Matchers {
       controller.solve()
       controller.gameStatus should be (GameStatus.SOLVED)
     }
+    "should have status solved with move" in {
+      controller.create_empty_grid(2)
+      controller.create_Level(Level(Array(1,2,0,3)))
+      controller.move(1, 1, 1, 0)
+      controller.gameStatus should be (GameStatus.SOLVED)
+    }
     "should have status illegal turn" in {
       controller.create_empty_grid(3)
       controller.create_Level()
@@ -58,6 +64,17 @@ class ControllerSpec extends WordSpec with Matchers {
     "a status text" in {
       controller.gameStatus = GameStatus.SOLVED
       controller.statusText should be("Puzzle solved")
+    }
+    "undo" in {
+      controller.create_empty_grid(2)
+      controller.create_Level(Level(Array(1,2,0,3)))
+      controller.move(1, 1, 1, 0)
+      controller.undo
+      controller.gameStatus should be (GameStatus.NOT_SOLVED_YET)
+    }
+    "redo" in {
+      controller.redo
+      controller.gameStatus should be (GameStatus.SOLVED)
     }
   }
 }

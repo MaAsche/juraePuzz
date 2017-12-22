@@ -18,10 +18,6 @@ class Solver(g:Grid) {
   }
   def check_level(): Boolean ={
     val l = g.getLevel()
-    if(l.length() == solve().length()){
-      l.s.corresponds(solve().s){_ == _}
-    }else{
-      false
-    }
+    l.s.corresponds(solve().s){_ == _}
   }
 }

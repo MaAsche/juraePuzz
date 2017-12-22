@@ -8,8 +8,7 @@ object GameStatus extends Enumeration{
     SOLVED -> "Puzzle solved",
     NOT_SOLVED_YET -> "Next turn",
     ILLEGAL_TURN -> "Illegal turn",
-    CREATE_LEVEL -> "generated Level",
-    NOT_CREATED_LEVEL -> "unable to generate Level")
+    CREATE_LEVEL -> "generated Level")
 
   def message(gameStatus: GameStatus) = {
     map(gameStatus)

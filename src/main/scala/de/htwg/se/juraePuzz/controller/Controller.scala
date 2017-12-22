@@ -27,8 +27,6 @@ class Controller(var grid: Grid) extends Observable with Publisher{
     var st1 = new GetSpecifiedLevel()
     if (grid.fill(st1.createLevel(this))) {
       gameStatus = CREATE_LEVEL
-    } else {
-      gameStatus = NOT_CREATED_LEVEL
     }
     notifyObservers
     toggleShow()
@@ -66,5 +64,9 @@ class Controller(var grid: Grid) extends Observable with Publisher{
     gameStatus = SOLVED
     notifyObservers
     toggleShow()
+  }
+
+  def create_Level(l:Level): Unit ={
+    grid.fill(l)
   }
 }
