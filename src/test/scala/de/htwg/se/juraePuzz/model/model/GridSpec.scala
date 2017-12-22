@@ -47,6 +47,7 @@ class GridSpec extends WordSpec with Matchers {
         g.matrix.get(0,0) should be(Piece("0", Rotation(0)))
         g.matrix.get(0, 1) should be (Piece("K", Rotation(0)))
         g.move(0,0, 1,0) should be (false)
+        g.move(0, 0, 1, -1) should be (false)
       }
       "generateGrid with Level" in {
         g.fill(Level("SKE0")) should be (true)

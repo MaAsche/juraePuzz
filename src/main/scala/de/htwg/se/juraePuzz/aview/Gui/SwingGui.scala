@@ -33,7 +33,7 @@ class SwingGui(controller: Controller) extends Frame{
       listenTo(mouse.clicks)
       reactions += {
         case e: MouseClicked =>{
-          controller.create_Level(2)
+          controller.create_Level(1)
           redraw
         }
       }
@@ -48,10 +48,15 @@ class SwingGui(controller: Controller) extends Frame{
     contents += new Button("Undo step") {
       listenTo(mouse.clicks)
       reactions += {
-        case e : MouseClicked => redraw
+        case e : MouseClicked => controller.undo
       }
     }
-    contents += new Button("Redo step")
+    contents += new Button("Redo step") {
+      listenTo(mouse.clicks)
+      reactions += {
+        case e : MouseClicked => controller.redo
+      }
+    }
     contents += new GridPanel(controller.grid.getSize(), controller.grid.getSize())
   }
 
