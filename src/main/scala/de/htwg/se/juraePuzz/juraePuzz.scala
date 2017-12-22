@@ -7,7 +7,7 @@ import  de.htwg.se.juraePuzz.aview.Tui
 import de.htwg.se.juraePuzz.aview.Gui.SwingGui
 object juraePuzz {
 
-  val controller = new Controller(new Grid(3))
+  val controller = new Controller(new Grid(2))
   val tui = new Tui(controller)
   val gui = new SwingGui(controller)
   controller.notifyObservers

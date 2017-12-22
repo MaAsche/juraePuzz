@@ -43,7 +43,7 @@ class PiecePanel (row: Int, column: Int, controller: Controller) extends FlowPan
   }
 
 
-  val candidatelist = (1 to (controller.grid.getSize()*controller.grid.getSize())).map {
+  val candidatelist = (1 to 9).map {
     value =>
       new Label {
         text = {
@@ -79,7 +79,7 @@ class PiecePanel (row: Int, column: Int, controller: Controller) extends FlowPan
         }
       }
   }
-  val candidates = new GridPanel(controller.grid.getSize(), controller.grid.getSize()) {
+  val candidates = new GridPanel(3, 3) {
     setBackground(this)
     contents ++= candidatelist
   }
