@@ -21,7 +21,7 @@ class Controller @Inject() (var grid: GridInterface) extends ControllerInterface
   val injector = Guice.createInjector(new JuraePuzzModule)
   val fileIo = injector.instance[FileIOInterface]
 
-  def create_empty_grid(size:Int): Unit ={
+  def create_empty_grid(): Unit ={
     grid.getSize() match {
       case 1 => grid = injector.instance[GridInterface](Names.named("klein"))
       case 3 => grid = injector.instance[GridInterface](Names.named("mittel"))
@@ -86,7 +86,7 @@ class Controller @Inject() (var grid: GridInterface) extends ControllerInterface
     val gridOption = fileIo.load
     gridOption match {
       case None => {
-        create_empty_grid(4)
+        create_empty_grid()
         gameStatus = COULDNOTLOAD
       }
       case Some(_grid) => {

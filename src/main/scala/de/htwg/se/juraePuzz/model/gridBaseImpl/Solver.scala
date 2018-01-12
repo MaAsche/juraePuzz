@@ -12,10 +12,11 @@ class Solver(g:GridInterface) {
     }
 
     Sorting.quickSort(sb)
-    for (i <- 0 until sb.length-1){
-      sb(i)=sb(i+1)
+    for (i <- 0 until sb.length-2){
+      sb(i)=sb(i+2)
     }
     sb(sb.length-1)=0
+    sb(sb.length-2)=0
     Level(sb)
   }
   def check_level(): Boolean ={

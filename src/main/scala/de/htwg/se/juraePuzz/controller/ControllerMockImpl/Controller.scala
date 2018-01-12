@@ -4,7 +4,7 @@ import de.htwg.se.juraePuzz.controller.{ControllerInterface, GameStatus}
 import de.htwg.se.juraePuzz.model.gridBaseImpl.{Grid, Level, Matrix}
 
 class Controller(var grid: Grid) extends ControllerInterface{
-  override def create_empty_grid(size: Int): Unit = {}
+  override def create_empty_grid(): Unit = {}
 
   override def toggleShow(): Unit = {}
 

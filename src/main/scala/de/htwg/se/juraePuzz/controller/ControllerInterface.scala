@@ -8,7 +8,7 @@ import scala.swing.Publisher
 
 trait ControllerInterface extends Publisher {
 
-  def create_empty_grid(size: Int): Unit
+  def create_empty_grid(): Unit
 
   def toggleShow(): Unit
 
