@@ -5,7 +5,7 @@ import org.scalatest.junit.JUnitRunner
 import org.scalatest.{Matchers, WordSpec}
 import de.htwg.se.juraePuzz.controller.GameStatus
 import de.htwg.se.juraePuzz.controller.controllerBaseImpl.Controller
-import de.htwg.se.juraePuzz.model.gridBaseImpl.{Grid, Level, Solver}
+import de.htwg.se.juraePuzz.model.gridBaseImpl.{Grid, Level, Matrix, Solver}
 import de.htwg.se.juraePuzz.util.{Observable, Observer}
 
 @RunWith(classOf[JUnitRunner])
@@ -78,5 +78,31 @@ class ControllerSpec extends WordSpec with Matchers {
       controller.redo
       controller.gameStatus should be (GameStatus.SOLVED)
     }
+    "save a game" in {
+      controller.create_empty_grid()
+      controller.create_Level()
+      controller.save
+      controller.gameStatus should be (GameStatus.SAVED)
+    }
+    "not load a game"in{
+      controller.load
+      controller.gameStatus should be (GameStatus.COULDNOTLOAD)
+    }
+    "load a game" in {
+      var grid = new Grid(3)
+      var controller = new Controller(grid)
+      controller.create_Level()
+      controller.save
+      println(controller.gridToString)
+      controller.load
+      controller.gameStatus should be (GameStatus.LOADED)
+    }
+    "have a grid size" in {
+      controller.gridSize should be (2)
+    }
+    "have a matrix" in {
+      controller.gridMatrix should be (Matrix(2))
+    }
+
   }
 }

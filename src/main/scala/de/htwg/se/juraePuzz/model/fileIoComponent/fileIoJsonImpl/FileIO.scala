@@ -23,7 +23,7 @@ class FileIO extends FileIOInterface {
       case 1 => gridOption = Some(injector.instance[GridInterface](Names.named("klein")))
       case 3 => gridOption = Some(injector.instance[GridInterface](Names.named("mittel")))
       case 9 => gridOption = Some(injector.instance[GridInterface](Names.named("normal")))
-      case _ => println("loading")
+      case _ =>
     }
     gridOption match {
       case Some(grid) => {
