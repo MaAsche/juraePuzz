@@ -1,6 +1,6 @@
 package de.htwg.se.juraePuzz.model.model
 
-import de.htwg.se.juraePuzz.model.Player
+import de.htwg.se.juraePuzz.model.playerComponent.Player
 import org.junit.runner.RunWith
 import org.scalatest._
 import org.scalatest.junit.JUnitRunner

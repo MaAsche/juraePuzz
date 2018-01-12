@@ -1,16 +1,19 @@
 package de.htwg.se.juraePuzz
 
-import de.htwg.se.juraePuzz.model.Player
-import de.htwg.se.juraePuzz.controller.Controller
-import de.htwg.se.juraePuzz.model.{Grid,Player}
-import  de.htwg.se.juraePuzz.aview.Tui
+import com.google.inject.Guice
+import de.htwg.se.juraePuzz.aview.Tui
 import de.htwg.se.juraePuzz.aview.Gui.SwingGui
+import de.htwg.se.juraePuzz.controller.ControllerInterface
+import de.htwg.se.juraePuzz.controller.controllerBaseImpl.Controller
+import de.htwg.se.juraePuzz.model.gridBaseImpl.Grid
 object juraePuzz {
 
-  val controller = new Controller(new Grid(3))
+  val injector = Guice.createInjector(new JuraePuzzModule)
+  val controller = injector.getInstance(classOf[ControllerInterface])
+
   val tui = new Tui(controller)
   val gui = new SwingGui(controller)
-  controller.notifyObservers
+  controller.toggleShow()
 
   def main(args: Array[String]): Unit = {
 

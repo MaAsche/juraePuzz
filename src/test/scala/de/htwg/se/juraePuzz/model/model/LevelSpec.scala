@@ -1,6 +1,6 @@
 package de.htwg.se.juraePuzz.model.model
 
-import de.htwg.se.juraePuzz.model.Level
+import de.htwg.se.juraePuzz.model.gridBaseImpl.Level
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.{Matchers, WordSpec}
@@ -9,8 +9,8 @@ import org.scalatest.{Matchers, WordSpec}
 class LevelSpec extends WordSpec with Matchers {
   "A Level" should {
     "have a value" in {
-      Level("0").s should be("0")
-      Level("0").length() should be (1)
+      Level(Array(0)).s should be(Array(0))
+      Level(Array(0)).length() should be (1)
     }
   }
 }

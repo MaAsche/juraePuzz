@@ -1,20 +1,24 @@
 package de.htwg.se.juraePuzz.aview.Gui
 
 
-import de.htwg.se.juraePuzz.controller.{Controller}
-import scala.swing._
-import scala.swing.event.MouseClicked
+import de.htwg.se.juraePuzz.controller.ControllerInterface
+import de.htwg.se.juraePuzz.controller.controllerBaseImpl.Controller
 
-class SwingGui(controller: Controller) extends Frame{
+import scala.swing._
+import scala.swing.event.{Event, MouseClicked}
+
+class SwingGui(controller: ControllerInterface) extends Frame{
   title = "juraePuzz"
 
-  var cells = Array.ofDim[PiecePanel](controller.grid.getSize(), controller.grid.getSize())
 
-  def gridPanel = new GridPanel(controller.grid.getSize(), controller.grid.getSize()) {
+
+  var cells = Array.ofDim[PiecePanel](controller.gridSize, controller.gridSize)
+
+  def gridPanel = new GridPanel(controller.gridSize, controller.gridSize) {
 
     for {
-      row <- 0 until controller.grid.getSize()
-      col <- 0 until controller.grid.getSize()
+      row <- 0 until controller.gridSize
+      col <- 0 until controller.gridSize
     } {
         val piecePanel = new PiecePanel(row, col, controller)
         cells(row)(col) = piecePanel
@@ -23,12 +27,14 @@ class SwingGui(controller: Controller) extends Frame{
       }
   }
 
+  listenTo(controller)
+
   def buttonPanel = new FlowPanel{
     contents += new Button("New") {
       listenTo(mouse.clicks)
       reactions += {
         case e: MouseClicked =>{
-          controller.create_Level(1)
+          controller.create_Level()
           redraw
         }
       }
@@ -40,23 +46,43 @@ class SwingGui(controller: Controller) extends Frame{
         case e: MouseClicked => System.exit(0)
       }
     }
-    contents += new Button("Undo step")
-    contents += new Button("Redo step")
-    contents += new GridPanel(controller.grid.getSize(), controller.grid.getSize())
+    contents += new Button("Undo step") {
+      listenTo(mouse.clicks)
+      reactions += {
+        case e : MouseClicked => controller.undo
+      }
+    }
+    contents += new Button("Redo step") {
+      listenTo(mouse.clicks)
+      reactions += {
+        case e : MouseClicked => controller.redo
+      }
+    }
+    contents += new GridPanel(controller.gridSize, controller.gridSize)
   }
+
+  val statusline = new TextField(controller.statusText, 20)
+
   contents = new BorderPanel {
     add(buttonPanel, BorderPanel.Position.North)
     add(gridPanel, BorderPanel.Position.Center)
+    add(statusline, BorderPanel.Position.South)
   }
    visible = true
+  redraw
+
+  reactions += {
+    case event: CellChanged => redraw
+  }
 
   def redraw = {
     for {
-      row <- 0 until controller.grid.getSize()
-      col <- 0 until controller.grid.getSize()
+      row <- 0 until controller.gridSize
+      col <- 0 until controller.gridSize
     } cells(row)(col).redraw
     resizable = false
     resizable = true
+    statusline.text = controller.statusText
     repaint
   }
 }

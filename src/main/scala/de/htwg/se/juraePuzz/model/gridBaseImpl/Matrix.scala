@@ -1,4 +1,4 @@
-package de.htwg.se.juraePuzz.model
+package de.htwg.se.juraePuzz.model.gridBaseImpl
 
 case class Matrix(size:Int) {
   val matrix = Array.ofDim[Piece](size, size)

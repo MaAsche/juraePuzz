@@ -1,12 +1,16 @@
 package de.htwg.se.juraePuzz.aview
 
-import de.htwg.se.juraePuzz.controller.{Controller, GameStatus}
+import de.htwg.se.juraePuzz.aview.Gui.CellChanged
+import de.htwg.se.juraePuzz.controller.{ControllerInterface, GameStatus}
 import de.htwg.se.juraePuzz.util.Observer
 import de.htwg.se.juraePuzz.controller.GameStatus._
+import de.htwg.se.juraePuzz.controller.controllerBaseImpl.Controller
 
-class Tui (controller: Controller) extends Observer{
+import scala.swing.Reactor
 
-  controller.add(this)
+class Tui (controller: ControllerInterface) extends Reactor{
+
+  listenTo(controller)
   val size = 3
 
   def process_input_line(input: String):Unit = {
@@ -15,7 +19,10 @@ class Tui (controller: Controller) extends Observer{
       case "q" =>
       case "z" => controller.undo
       case "y" => controller.redo
-      case "c" => controller.create_Level(2)
+      case "c" => controller.create_Level()
+      case "s" => controller.solve()
+      case "f" => controller.save
+      case "l" => controller.load
       case _ => input.toList.filter(c => c != ' ').map(c => c.toString.toInt) match {
         case xS :: yS :: xT :: yT :: Nil => controller.move(xS, yS, xT, yT)
         case _ =>
@@ -23,9 +30,10 @@ class Tui (controller: Controller) extends Observer{
     }
   }
 
-  override def update: Unit = {
-    println(controller.grid)
-    println(GameStatus.message(controller.gameStatus))
-    controller.gameStatus = IDLE
+ reactions += {
+   case even: CellChanged => printTui
+ }
+  def printTui: Unit = {
+    println(controller.gridToString)
   }
 }
