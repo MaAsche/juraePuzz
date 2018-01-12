@@ -18,10 +18,10 @@ class JuraePuzzModule extends AbstractModule with ScalaModule {
     bind[ControllerInterface].to[controller.controllerBaseImpl.Controller]
 
     bind[GridInterface].annotatedWithName("klein").toInstance(new model.gridBaseImpl.Grid(1))
-    bind[GridInterface].annotatedWithName("mittel").toInstance(new model.gridBaseImpl.Grid(4))
+    bind[GridInterface].annotatedWithName("mittel").toInstance(new model.gridBaseImpl.Grid(3))
     bind[GridInterface].annotatedWithName("normal").toInstance(new model.gridBaseImpl.Grid(9))
 
-    bind[FileIOInterface].to[model.fileIoComponent.fileIoJsonImpl.FileIO]
+    bind[FileIOInterface].to[model.fileIoComponent.fileIoXmlImpl.FileIO]
 
   }
 

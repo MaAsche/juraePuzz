@@ -1,6 +1,7 @@
 package de.htwg.se.juraePuzz.controller
 
 
+import de.htwg.se.juraePuzz.controller.GameStatus.GameStatus
 import de.htwg.se.juraePuzz.model.gridBaseImpl.{Grid, Level, Matrix}
 
 import scala.swing.Publisher
@@ -34,6 +35,8 @@ trait ControllerInterface extends Publisher {
   def gridSize: Int
 
   def gridMatrix: Matrix
+
+  def gameStatus: GameStatus
 }
 
 

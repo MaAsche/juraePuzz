@@ -58,6 +58,21 @@ class SwingGui(controller: ControllerInterface) extends Frame{
         case e : MouseClicked => controller.redo
       }
     }
+
+    contents += new Button("Save") {
+      listenTo(mouse.clicks)
+      reactions += {
+        case e : MouseClicked => controller.save
+      }
+    }
+
+    contents += new Button("Load") {
+      listenTo(mouse.clicks)
+      reactions += {
+        case e : MouseClicked => controller.load
+      }
+    }
+
     contents += new GridPanel(controller.gridSize, controller.gridSize)
   }
 

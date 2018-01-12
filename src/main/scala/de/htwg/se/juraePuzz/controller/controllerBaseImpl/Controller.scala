@@ -24,11 +24,10 @@ class Controller @Inject() (var grid: GridInterface) extends ControllerInterface
   def create_empty_grid(size:Int): Unit ={
     grid.getSize() match {
       case 1 => grid = injector.instance[GridInterface](Names.named("klein"))
-      case 4 => grid = injector.instance[GridInterface](Names.named("mittel"))
+      case 3 => grid = injector.instance[GridInterface](Names.named("mittel"))
       case 9 => grid = injector.instance[GridInterface](Names.named("normal"))
       case _ =>
     }
-    publish(new CellChanged)
     toggleShow
   }
 
@@ -41,8 +40,7 @@ class Controller @Inject() (var grid: GridInterface) extends ControllerInterface
     if (grid.fill(st1.createLevel(this))) {
       gameStatus = CREATE_LEVEL
     }
-    publish(new CellChanged)
-    toggleShow()
+  toggleShow()
   }
 
   def move(xS:Int, yS:Int, xT:Int, yT:Int) = {
@@ -55,26 +53,22 @@ class Controller @Inject() (var grid: GridInterface) extends ControllerInterface
     } else {
       gameStatus = ILLEGAL_TURN
     }
-    publish(new CellChanged)
     toggleShow()
   }
 
   def undo: Unit = {
     undoManager.undoStep
-    publish(new CellChanged)
     toggleShow
   }
 
   def redo: Unit = {
     undoManager.redoStep
-    publish(new CellChanged)
     toggleShow
   }
 
   def solve(): Unit ={
     grid.solve()
     gameStatus = SOLVED
-    publish(new CellChanged)
     toggleShow()
   }
 
@@ -85,7 +79,7 @@ class Controller @Inject() (var grid: GridInterface) extends ControllerInterface
   def save: Unit = {
     fileIo.save(grid)
     gameStatus = SAVED
-    publish(new CellChanged)
+    toggleShow()
   }
 
   override def load: Unit = {
@@ -100,7 +94,7 @@ class Controller @Inject() (var grid: GridInterface) extends ControllerInterface
         gameStatus = LOADED
       }
     }
-    publish(new CellChanged)
+    toggleShow()
   }
 
   override def gridToString: String = grid.toString()

@@ -20,7 +20,7 @@ class FileIO extends FileIOInterface {
     val injector = Guice.createInjector(new JuraePuzzModule)
     size match {
       case 1 => gridOption = Some(injector.instance[GridInterface](Names.named("klein")))
-      case 4 => gridOption = Some(injector.instance[GridInterface](Names.named("mittel")))
+      case 3 => gridOption = Some(injector.instance[GridInterface](Names.named("mittel")))
       case 9 => gridOption = Some(injector.instance[GridInterface](Names.named("normal")))
       case _ =>
     }

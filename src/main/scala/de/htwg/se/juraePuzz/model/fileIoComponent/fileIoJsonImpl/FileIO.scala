@@ -20,10 +20,10 @@ class FileIO extends FileIOInterface {
     val size = (json \ "grid" \ "size").get.toString.toInt
     val injector = Guice.createInjector(new JuraePuzzModule)
     size match {
-      case 1 => gridOption = Some(injector.instance[GridInterface](Names.named("tiny")))
-      case 4 => gridOption = Some(injector.instance[GridInterface](Names.named("small")))
+      case 1 => gridOption = Some(injector.instance[GridInterface](Names.named("klein")))
+      case 3 => gridOption = Some(injector.instance[GridInterface](Names.named("mittel")))
       case 9 => gridOption = Some(injector.instance[GridInterface](Names.named("normal")))
-      case _ =>
+      case _ => println("loading")
     }
     gridOption match {
       case Some(grid) => {
@@ -31,7 +31,7 @@ class FileIO extends FileIOInterface {
         for (index <- 0 until size * size) {
           val row = (json \\ "row") (index).as[Int]
           val col = (json \\ "col") (index).as[Int]
-          val value = (json \ "value").as[Int]
+          val value = (json \\ "value") (index).as[Int]
           _grid.fill(Piece(value, Rotation(0)),row, col)
         }
         gridOption=Some(_grid)

@@ -11,7 +11,7 @@ import scala.swing.Reactor
 class Tui (controller: ControllerInterface) extends Reactor{
 
   listenTo(controller)
-  val size = 3
+  val size = controller.gridSize
 
   def process_input_line(input: String):Unit = {
     input match {
@@ -35,5 +35,6 @@ class Tui (controller: ControllerInterface) extends Reactor{
  }
   def printTui: Unit = {
     println(controller.gridToString)
+    println(GameStatus.message(controller.gameStatus))
   }
 }
