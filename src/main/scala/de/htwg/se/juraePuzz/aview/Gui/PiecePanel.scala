@@ -1,12 +1,14 @@
 package de.htwg.se.juraePuzz.aview.Gui
+import de.htwg.se.juraePuzz.controller.ControllerInterface
+import de.htwg.se.juraePuzz.controller.controllerBaseImpl.Controller
+
 import scala.swing._
 import scala.swing.event.{Event, KeyPressed, MouseClicked}
-import de.htwg.se.juraePuzz.controller.Controller
 
 
 class CellChanged extends Event
 
-class PiecePanel (row: Int, column: Int, controller: Controller) extends FlowPanel{
+class PiecePanel (row: Int, column: Int, controller: ControllerInterface) extends FlowPanel{
 
   val givenCellColor = new Color(200, 200, 255)
   val cellColor = new Color(224, 224, 255)
@@ -14,7 +16,7 @@ class PiecePanel (row: Int, column: Int, controller: Controller) extends FlowPan
   var clicked = false
 
   def pieceText = {
-    controller.grid.matrix.get(row, column).s
+    controller.gridMatrix.get(row, column).s
   }
 
   val label =

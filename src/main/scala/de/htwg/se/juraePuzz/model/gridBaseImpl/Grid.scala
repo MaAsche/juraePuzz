@@ -1,16 +1,24 @@
-package de.htwg.se.juraePuzz.model
+package de.htwg.se.juraePuzz.model.gridBaseImpl
 
-class Grid(size:Int) {
+import de.htwg.se.juraePuzz.model.GridInterface
+import com.google.inject.Inject
+import com.google.inject.name.Named
+
+class Grid @Inject() (@Named("DefaultSize")size:Int) extends GridInterface {
+
   val matrix = Matrix(size)
 
-
   empty()
+
+
 
   def empty(): Unit = {
     for (i <- 0 until size; j <- 0 until size) {
       matrix.fill(Piece(0, Rotation(0)), i, j)
     }
   }
+
+  override def getMatrix(): Matrix = matrix
 
   def getSize():Int = {
     matrix.size

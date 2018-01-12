@@ -1,6 +1,6 @@
 package de.htwg.se.juraePuzz.model.model
 
-import de.htwg.se.juraePuzz.model.{Grid, Level, Piece, Rotation}
+import de.htwg.se.juraePuzz.model.gridBaseImpl.{Grid, Level, Piece, Rotation}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.{Matchers, WordSpec}

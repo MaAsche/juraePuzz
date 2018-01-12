@@ -1,23 +1,24 @@
 package de.htwg.se.juraePuzz.aview.Gui
 
 
-import de.htwg.se.juraePuzz.controller.Controller
+import de.htwg.se.juraePuzz.controller.ControllerInterface
+import de.htwg.se.juraePuzz.controller.controllerBaseImpl.Controller
 
 import scala.swing._
 import scala.swing.event.{Event, MouseClicked}
 
-class SwingGui(controller: Controller) extends Frame{
+class SwingGui(controller: ControllerInterface) extends Frame{
   title = "juraePuzz"
 
 
 
-  var cells = Array.ofDim[PiecePanel](controller.grid.getSize(), controller.grid.getSize())
+  var cells = Array.ofDim[PiecePanel](controller.gridSize, controller.gridSize)
 
-  def gridPanel = new GridPanel(controller.grid.getSize(), controller.grid.getSize()) {
+  def gridPanel = new GridPanel(controller.gridSize, controller.gridSize) {
 
     for {
-      row <- 0 until controller.grid.getSize()
-      col <- 0 until controller.grid.getSize()
+      row <- 0 until controller.gridSize
+      col <- 0 until controller.gridSize
     } {
         val piecePanel = new PiecePanel(row, col, controller)
         cells(row)(col) = piecePanel
@@ -57,7 +58,7 @@ class SwingGui(controller: Controller) extends Frame{
         case e : MouseClicked => controller.redo
       }
     }
-    contents += new GridPanel(controller.grid.getSize(), controller.grid.getSize())
+    contents += new GridPanel(controller.gridSize, controller.gridSize)
   }
 
   val statusline = new TextField(controller.statusText, 20)
@@ -76,8 +77,8 @@ class SwingGui(controller: Controller) extends Frame{
 
   def redraw = {
     for {
-      row <- 0 until controller.grid.getSize()
-      col <- 0 until controller.grid.getSize()
+      row <- 0 until controller.gridSize
+      col <- 0 until controller.gridSize
     } cells(row)(col).redraw
     resizable = false
     resizable = true

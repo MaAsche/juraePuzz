@@ -1,10 +1,9 @@
 package de.htwg.se.juraePuzz.model.model
 
-import de.htwg.se.juraePuzz.model.Solver
+import de.htwg.se.juraePuzz.model.gridBaseImpl.{Grid, Solver}
 import org.junit.runner.RunWith
 import org.scalatest.{Matchers, WordSpec}
 import org.scalatest.junit.JUnitRunner
-import de.htwg.se.juraePuzz.model.{Grid,Level}
 
 @RunWith(classOf[JUnitRunner])
 class SolverSpec extends WordSpec with Matchers {

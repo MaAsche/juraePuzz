@@ -1,12 +1,14 @@
-package de.htwg.se.juraePuzz.model
+package de.htwg.se.juraePuzz.model.gridBaseImpl
+
+import de.htwg.se.juraePuzz.model.GridInterface
 
 import scala.util.Sorting
 
-class Solver(g:Grid) {
+class Solver(g:GridInterface) {
   def solve(): Level = {
     var sb = Array.ofDim[Int](g.getSize() * g.getSize())
-    for (i <- 0 until g.matrix.size; j <- 0 until g.matrix.size) {
-      sb(j + i * g.getSize()) = (g.matrix.get(i, j).s)
+    for (i <- 0 until g.getMatrix().size; j <- 0 until g.getMatrix().size) {
+      sb(j + i * g.getSize()) = (g.getMatrix().get(i, j).s)
     }
 
     Sorting.quickSort(sb)

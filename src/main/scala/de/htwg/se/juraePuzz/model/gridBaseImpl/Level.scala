@@ -1,4 +1,4 @@
-package de.htwg.se.juraePuzz.model
+package de.htwg.se.juraePuzz.model.gridBaseImpl
 
 case class Level(s:Array[Int]){
   def length(): Int = s.length

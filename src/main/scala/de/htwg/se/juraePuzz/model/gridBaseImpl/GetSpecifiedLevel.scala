@@ -1,8 +1,6 @@
-package de.htwg.se.juraePuzz.model
+package de.htwg.se.juraePuzz.model.gridBaseImpl
 
-import de.htwg.se.juraePuzz.controller.Controller
-
-import scala.collection.mutable.ListBuffer
+import de.htwg.se.juraePuzz.controller.controllerBaseImpl.Controller
 
 class GetSpecifiedLevel extends LevelGenerateStrategyTemplate {
   override def createLevel(controller: Controller): Level = {

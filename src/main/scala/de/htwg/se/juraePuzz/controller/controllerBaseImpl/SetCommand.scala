@@ -1,4 +1,4 @@
-package de.htwg.se.juraePuzz.controller
+package de.htwg.se.juraePuzz.controller.controllerBaseImpl
 
 import de.htwg.se.juraePuzz.util.Command
 
