@@ -1,4 +1,4 @@
-[![Travis](https://travis-ci.org/judiet/juraePuzz.svg?branch=master)]()
+[![Build Status](https://travis-ci.org/judiet/juraePuzz.svg?branch=Controller)](https://travis-ci.org/judiet/juraePuzz)
 
 [![Coverage Status](https://coveralls.io/repos/github/judiet/juraePuzz/badge.svg?branch=master)](https://coveralls.io/github/judiet/juraePuzz?branch=master)
 
