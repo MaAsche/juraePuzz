@@ -16,13 +16,10 @@ object juraePuzz {
   controller.toggleShow()
 
   def main(args: Array[String]): Unit = {
-
     var input: String = ""
-
     do {
       input = scala.io.StdIn.readLine()
       tui.process_input_line(input)
     } while (input != "q")
   }
-
 }
