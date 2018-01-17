@@ -21,4 +21,6 @@ class Grid extends GridInterface{
   override def solve(): Unit = {}
 
   override def getMatrix() = Matrix(4)
+
+  override def manhatten() = 0
 }

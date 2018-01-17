@@ -25,4 +25,6 @@ trait GridInterface extends Publisher {
   def solve(): Unit
 
   def getMatrix(): Matrix
+
+  def manhatten(): Int
 }
