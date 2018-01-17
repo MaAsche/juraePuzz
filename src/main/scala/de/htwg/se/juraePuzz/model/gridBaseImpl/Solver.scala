@@ -1,35 +1,13 @@
 package de.htwg.se.juraePuzz.model.gridBaseImpl
 
 import java.util
+import java.util.PriorityQueue
 
 import de.htwg.se.juraePuzz.model.GridInterface
 
 import scala.util.Sorting
 
 class Solver(g:GridInterface) {
-
-  var solved = false
-
-  val l = new util.LinkedList[Node]()
-
-  l.add(new Node(g, 0, null))
-
-  def tiwn(): GridInterface = {
-    var newgrid = new Grid(g.getSize())
-
-  }
-
-  class Node(g: GridInterface, m: Int, p: Node) extends Comparable[Node]{
-    val grid = g
-    val moves = m
-    val prev = p
-    val dist = grid.manhatten()
-
-    override def compareTo(other: Node): Int = {
-      this.moves + this.dist - other.moves - other.dist
-    }
-  }
-
   def solve(): Level = {
     var sb = Array.ofDim[Int](g.getSize() * g.getSize())
     for (i <- 0 until g.getMatrix().size; j <- 0 until g.getMatrix().size) {
@@ -49,16 +27,48 @@ class Solver(g:GridInterface) {
     l.s.corresponds(solve().s){_ == _}
   }
 
-  private def root(node: Node): Node = {
-    var current = node
-    while (current.prev != null) {
-      current = current.prev
-    }
-    current
-  }
+  def solve_with_algo(): Boolean = {
+    val list = new util.LinkedList[GridInterface]()
 
-  def isSolveable(): Boolean = {
-    solved
+    list.add(g)
+
+    for (i <- 0 until g.getSize(); j <- 0 until g.getSize()) {
+      if (g.getMatrix().get(i,j).s == 0){
+
+        val g1 = new Grid(3)
+        g1.fill(g.getLevel())
+        g1.move(i + 1, j, i, j)
+
+        val g2 = new Grid(3)
+        g2.fill(g.getLevel())
+        g2.move(i - 1, j, i, j)
+
+        val g3 = new Grid(3)
+        g3.fill(g.getLevel())
+        g3.move(i, j + 1, i, j)
+
+        val g4 = new Grid(3)
+        g4.fill(g.getLevel())
+        g4.move(i, j - 1, i, j)
+
+        if (!list.contains(g1)){
+          list.add(g1)
+        }
+        if (!list.contains(g2)){
+          list.add(g2)
+        }
+        if (!list.contains(g3)){
+          list.add(g3)
+        }
+        if (!list.contains(g4)){
+          list.add(g4)
+        }
+
+        println(list)
+        return true
+      }
+    }
+    false
   }
 }
 

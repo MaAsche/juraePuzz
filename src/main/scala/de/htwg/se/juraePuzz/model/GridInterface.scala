@@ -27,4 +27,6 @@ trait GridInterface extends Publisher {
   def getMatrix(): Matrix
 
   def manhatten(): Int
+
+  def isGoal(): Boolean
 }

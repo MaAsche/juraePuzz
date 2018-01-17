@@ -110,7 +110,9 @@ class Grid @Inject() (@Named("DefaultSize")size:Int) extends GridInterface {
     Level(sb)
   }
   def solve(): Unit ={
+    println(new Solver(this).solve_with_algo())
     fill(new Solver(this).solve())
+
   }
 
   def manhatten(): Int = {
@@ -132,5 +134,18 @@ class Grid @Inject() (@Named("DefaultSize")size:Int) extends GridInterface {
       }
     }
     true
+  }
+
+  override def equals(obj: scala.Any): Boolean = {
+    obj match {
+      case that: GridInterface => {
+        if (that.getLevel().equals(this.getLevel())) {
+          println("equals")
+          true
+        }
+        false
+      }
+      case _ => false
+    }
   }
 }

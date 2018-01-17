@@ -23,4 +23,6 @@ class Grid extends GridInterface{
   override def getMatrix() = Matrix(4)
 
   override def manhatten() = 0
+
+  override def isGoal() = false
 }

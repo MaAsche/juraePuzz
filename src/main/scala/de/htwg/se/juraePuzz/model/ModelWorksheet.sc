@@ -1,3 +1,5 @@
+import scala.collection.mutable
+
 case class Rotation(r:Int)
 case class Piece(s:String,r:Rotation)
 
@@ -120,5 +122,8 @@ val solver = new Solver(g,level)
 solver.check_level()
 
 
+val pq =  mutable.PriorityQueue(1,2,3,4,5,6,7)
+
+print(pq.dequeueAll)
 
 
