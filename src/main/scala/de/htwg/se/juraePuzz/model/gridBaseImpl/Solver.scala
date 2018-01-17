@@ -23,5 +23,4 @@ class Solver(g:GridInterface) {
     val l = g.getLevel()
     l.s.corresponds(solve().s){_ == _}
   }
-  //Testline three
 }
