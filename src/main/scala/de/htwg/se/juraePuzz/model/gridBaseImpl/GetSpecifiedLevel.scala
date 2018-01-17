@@ -8,7 +8,7 @@ class GetSpecifiedLevel extends LevelGenerateStrategyTemplate {
   override def createLevel(controller: Controller): Level = {
     val size = controller.grid.getSize()*controller.grid.getSize()
     var l = Array.ofDim[Int](size)
-    for (i <- 0 until (size) - 1) {
+    for (i <- 0 until (size) - 2) {
       l(i)= i + 1
     }
     shuffle(l)
