@@ -1,7 +1,7 @@
 package de.htwg.se.juraePuzz.aview.Gui
 
 
-import de.htwg.se.juraePuzz.controller.ControllerInterface
+import de.htwg.se.juraePuzz.controller.{ControllerInterface, ShowCand}
 import de.htwg.se.juraePuzz.controller.controllerBaseImpl.Controller
 
 import scala.swing._
@@ -88,6 +88,7 @@ class SwingGui(controller: ControllerInterface) extends Frame{
 
   reactions += {
     case event: CellChanged => redraw
+    case event: ShowCand => redraw
   }
 
   def redraw = {

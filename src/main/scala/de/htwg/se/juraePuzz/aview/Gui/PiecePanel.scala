@@ -1,5 +1,5 @@
 package de.htwg.se.juraePuzz.aview.Gui
-import de.htwg.se.juraePuzz.controller.ControllerInterface
+import de.htwg.se.juraePuzz.controller.{ControllerInterface, ShowCand}
 import de.htwg.se.juraePuzz.controller.controllerBaseImpl.Controller
 
 import scala.swing._
@@ -38,8 +38,7 @@ class PiecePanel (row: Int, column: Int, controller: ControllerInterface) extend
           case "0" =>
           case _ => clicked = true
         }
-        controller.toggleShow()
-
+        controller.publish(new ShowCand)
       }
     }
   }
@@ -76,7 +75,7 @@ class PiecePanel (row: Int, column: Int, controller: ControllerInterface) extend
               case 8 => controller.move(row, column, row + 1, column)
               case _ =>
             }
-            controller.toggleShow()
+            controller.publish(new ShowCand)
           }
         }
       }

@@ -43,3 +43,4 @@ trait ControllerInterface extends Publisher {
 import scala.swing.event.Event
 
 class CellChanged extends Event
+class ShowCand extends Event

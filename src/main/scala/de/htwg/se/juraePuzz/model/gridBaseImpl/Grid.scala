@@ -10,8 +10,6 @@ class Grid @Inject() (@Named("DefaultSize")size:Int) extends GridInterface {
 
   empty()
 
-
-
   def empty(): Unit = {
     for (i <- 0 until size; j <- 0 until size) {
       matrix.fill(Piece(0, Rotation(0)), i, j)
@@ -63,6 +61,7 @@ class Grid @Inject() (@Named("DefaultSize")size:Int) extends GridInterface {
   }
 
   def checkMove(xS:Int, yS:Int, xT:Int, yT:Int): Boolean = {
+
     if (xS >= matrix.size ||
       xT >= matrix.size ||
       yS >= matrix.size ||
@@ -112,5 +111,26 @@ class Grid @Inject() (@Named("DefaultSize")size:Int) extends GridInterface {
   }
   def solve(): Unit ={
     fill(new Solver(this).solve())
+  }
+
+  def manhatten(): Int = {
+    var dist = 0
+    for (i <- 0 until matrix.size; j <- 0 until matrix.size) {
+      if (matrix.get(i, j) != 0) {
+        val rowSteps = (matrix.get(i,j).s - 1) / size
+        val colSteps = (matrix.get(i,j).s - 1) % size
+        dist += Math.abs(rowSteps - i) + Math.abs(colSteps - j)
+      }
+    }
+    dist
+  }
+
+  def isGoal(): Boolean = {
+    for (i <- 0 until size; j <- 0 until size) {
+      if (matrix.get(i,j).s != i * (size) + j + 1 && (i != size - 1 || j != size - 1)) {
+        return false
+      }
+    }
+    true
   }
 }
