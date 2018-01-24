@@ -110,8 +110,10 @@ class Grid @Inject() (@Named("DefaultSize")size:Int) extends GridInterface {
     Level(sb)
   }
   def solve(): Unit ={
-    println(new Solver(this).solve_with_algo())
-    fill(new Solver(this).solve())
+    val l = new Solver(this).solve_with_algo()
+    println("l "+l)
+    fill(l)
+    //fill(new Solver(this).solve())
 
   }
 
@@ -129,23 +131,31 @@ class Grid @Inject() (@Named("DefaultSize")size:Int) extends GridInterface {
 
   def isGoal(): Boolean = {
     for (i <- 0 until size; j <- 0 until size) {
-      if (matrix.get(i,j).s != i * (size) + j + 1 && (i != size - 1 || j != size - 1)) {
+      println(i * size + j + 1 )
+      if (matrix.get(i,j).s != i * size + j + 1 && (i != size - 1 || j != size - 1)) {
         return false
       }
     }
     true
   }
+  def copy():GridInterface={
+    val a = new Grid(size)
+    a.fill(getLevel())
+    a
+  }
 
   override def equals(obj: scala.Any): Boolean = {
     obj match {
       case that: GridInterface => {
-        if (that.getLevel().equals(this.getLevel())) {
-          println("equals")
-          true
+        for (i <- 0 until that.getSize(); j <- 0 until that.getSize()) {
+          if (that.getMatrix().get(i,j).s != this.getMatrix().get(i,j).s){
+            return false
+          }
         }
-        false
+        return true
       }
       case _ => false
     }
   }
+
 }

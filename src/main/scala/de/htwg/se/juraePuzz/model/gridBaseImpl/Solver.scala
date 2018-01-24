@@ -5,6 +5,7 @@ import java.util.PriorityQueue
 
 import de.htwg.se.juraePuzz.model.GridInterface
 
+import scala.collection.mutable.{ArrayBuffer, ListBuffer}
 import scala.util.Sorting
 
 class Solver(g:GridInterface) {
@@ -15,61 +16,91 @@ class Solver(g:GridInterface) {
     }
 
     Sorting.quickSort(sb)
-    for (i <- 0 until sb.length-2){
-      sb(i)=sb(i+2)
+    for (i <- 0 until sb.length - 2) {
+      sb(i) = sb(i + 2)
     }
-    sb(sb.length-1)=0
-    sb(sb.length-2)=0
+    sb(sb.length - 1) = 0
+    sb(sb.length - 2) = 0
     Level(sb)
   }
-  def check_level(): Boolean ={
+
+  def check_level(): Boolean = {
     val l = g.getLevel()
-    l.s.corresponds(solve().s){_ == _}
-  }
-
-  def solve_with_algo(): Boolean = {
-    val list = new util.LinkedList[GridInterface]()
-
-    list.add(g)
-
-    for (i <- 0 until g.getSize(); j <- 0 until g.getSize()) {
-      if (g.getMatrix().get(i,j).s == 0){
-
-        val g1 = new Grid(3)
-        g1.fill(g.getLevel())
-        g1.move(i + 1, j, i, j)
-
-        val g2 = new Grid(3)
-        g2.fill(g.getLevel())
-        g2.move(i - 1, j, i, j)
-
-        val g3 = new Grid(3)
-        g3.fill(g.getLevel())
-        g3.move(i, j + 1, i, j)
-
-        val g4 = new Grid(3)
-        g4.fill(g.getLevel())
-        g4.move(i, j - 1, i, j)
-
-        if (!list.contains(g1)){
-          list.add(g1)
-        }
-        if (!list.contains(g2)){
-          list.add(g2)
-        }
-        if (!list.contains(g3)){
-          list.add(g3)
-        }
-        if (!list.contains(g4)){
-          list.add(g4)
-        }
-
-        println(list)
-        return true
-      }
+    l.s.corresponds(solve().s) {
+      _ == _
     }
-    false
   }
+
+
+  val list = new ArrayBuffer[GridInterface]()
+
+  val visited = new ArrayBuffer[GridInterface]()
+
+  def solve_with_algo(): Level = {
+
+    import java.io.IOException
+    // Clear the queue and add the initial state.
+    var copy_g = g.copy()
+    list.clear
+    list += copy_g
+
+    while (!list.isEmpty) {
+      // Get the best next state.
+    //  println(list)
+      var index = 0
+      for (i<-0 until list.size){
+        var min = 1000
+        if (list(i).manhatten() < min) {
+          min = list(i).manhatten()
+          index = i
+        }
+      }
+
+      copy_g = list.remove(index)
+      //println("visited " + copy_g)
+      // Check if the state is a solution.
+      if (copy_g.isGoal()) {
+        //println("Goal: " + copy_g.getLevel())
+        return copy_g.getLevel()
+      }
+
+      val g1 = copy_g.copy()
+      val g2 = copy_g.copy()
+      val g3 = copy_g.copy()
+      val g4 = copy_g.copy()
+
+      visited += copy_g
+      println("visited " + visited.contains(copy_g))
+
+      var x_pos=0
+      var y_pos=0
+      for (i <- 0 until copy_g.getSize(); j <- 0 until copy_g.getSize()) {
+        if (copy_g.getMatrix().get(i,j).s==0) {
+          x_pos=i
+          y_pos=j
+        }
+
+        if (g1.move(x_pos + 1, y_pos, x_pos, y_pos) && !visited.contains(g1)){
+            list += g1
+        }
+          if (g2.move(x_pos - 1, y_pos, x_pos, y_pos)&& !visited.contains(g2)){
+              list += g2
+          }
+          if (g3.move(x_pos, y_pos + 1, x_pos, y_pos)&& !visited.contains(g3)){
+              list += g3
+          }
+          if (g4.move(x_pos, y_pos - 1, x_pos, y_pos)&& !visited.contains(g4)){
+              list += g4
+          }
+
+      }
+      //println("Liste " + list)
+
+    }
+    //println("noooop")
+    return new Level(Array.fill(g.getSize()*g.getSize())(0))
+  }
+
 }
 
 

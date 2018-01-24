@@ -18,6 +18,7 @@ class Controller @Inject() (var grid: GridInterface) extends ControllerInterface
 
   var gameStatus: GameStatus = IDLE
   val undoManager = new UndoManager
+
   val injector = Guice.createInjector(new JuraePuzzModule)
   val fileIo = injector.instance[FileIOInterface]
 
@@ -67,7 +68,8 @@ class Controller @Inject() (var grid: GridInterface) extends ControllerInterface
   }
 
   def solve(): Unit ={
-    grid.solve()
+   grid.solve()
+
     gameStatus = SOLVED
     toggleShow()
   }

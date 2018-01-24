@@ -25,4 +25,6 @@ class Grid extends GridInterface{
   override def manhatten() = 0
 
   override def isGoal() = false
+
+  override def copy(): GridInterface = new Grid
 }

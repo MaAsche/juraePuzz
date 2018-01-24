@@ -29,4 +29,7 @@ trait GridInterface extends Publisher {
   def manhatten(): Int
 
   def isGoal(): Boolean
+
+  def copy():GridInterface
+
 }
