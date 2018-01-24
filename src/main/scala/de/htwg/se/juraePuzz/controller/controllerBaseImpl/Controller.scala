@@ -22,12 +22,7 @@ class Controller @Inject() (var grid: GridInterface) extends ControllerInterface
   val fileIo = injector.instance[FileIOInterface]
 
   def create_empty_grid(): Unit ={
-    grid.getSize() match {
-      case 1 => grid = injector.instance[GridInterface](Names.named("klein"))
-      case 3 => grid = injector.instance[GridInterface](Names.named("mittel"))
-      case 9 => grid = injector.instance[GridInterface](Names.named("normal"))
-      case _ =>
-    }
+    grid.empty()
     toggleShow
   }
 

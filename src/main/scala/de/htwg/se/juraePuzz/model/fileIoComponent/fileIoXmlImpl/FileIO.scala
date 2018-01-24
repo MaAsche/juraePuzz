@@ -19,9 +19,7 @@ class FileIO extends FileIOInterface {
     val size = sizeAttr.text.toInt
     val injector = Guice.createInjector(new JuraePuzzModule)
     size match {
-      case 1 => gridOption = Some(injector.instance[GridInterface](Names.named("klein")))
       case 3 => gridOption = Some(injector.instance[GridInterface](Names.named("mittel")))
-      case 9 => gridOption = Some(injector.instance[GridInterface](Names.named("normal")))
       case _ =>
     }
     val cellNodes= (file \\ "cell")
@@ -71,4 +69,5 @@ class FileIO extends FileIOInterface {
       {grid.getMatrix.get(row,col).s}
     </cell>
   }
+
 }
