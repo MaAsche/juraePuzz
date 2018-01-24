@@ -8,8 +8,6 @@ case class Matrix(size:Int) {
   def getSize():Int = size
 }
 
-
-
 case class Grid(size:Int){
   val matrix = Matrix(size)
   def print() = {

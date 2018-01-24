@@ -32,68 +32,28 @@ class PiecePanel (row: Int, column: Int, controller: ControllerInterface) extend
     listenTo(mouse.clicks)
     reactions += {
       case e: MouseClicked => {
-        label.text match{
-          case "S" =>
-          case "E" =>
-          case "0" =>
-          case _ => clicked = true
+        if(row - 1 >= 0 && controller.gridMatrix.get(row - 1, column).s==0){
+          controller.move(row, column, row - 1, column)
         }
-        controller.publish(new ShowCand)
+        if (column - 1 >= 0 && controller.gridMatrix.get(row, column - 1).s ==0){
+          controller.move(row, column, row, column - 1)
+        }
+        if (column + 1 < controller.gridMatrix.size && controller.gridMatrix.get(row, column + 1).s ==0){
+          controller.move(row, column, row, column + 1)
+        }
+        if (row + 1 < controller.gridMatrix.size && controller.gridMatrix.get(row + 1, column).s ==0) {
+          controller.move(row, column, row + 1, column)
+        }
       }
     }
   }
 
-
-  val candidatelist = (1 to 9).map {
-    value =>
-      new Label {
-        text = {
-          value match {
-            case 2 => "u"
-            case 4 => "l"
-            case 6 => "r"
-            case 8 => "d"
-            case _ => " "
-          }
-        }
-        preferredSize = new Dimension(17, 17)
-        font = new Font("Verdana", 1, 9)
-        //background = cellColor
-        border = Swing.BeveledBorder(Swing.Raised)
-        listenTo(mouse.clicks)
-        //listenTo(controller)
-        reactions += {
-          case e: MouseClicked => { // (src, pt, mod, clicks, pops) => {
-            //controller.move(row, column, value)
-            //text = if (controller.available(row, column).contains(value)) value.toString else " "
-            //controller.move()
-            clicked = false
-            value match {
-              case 2 => controller.move(row, column, row - 1, column)
-              case 4 => controller.move(row, column, row, column - 1)
-              case 6 => controller.move(row, column, row, column + 1)
-              case 8 => controller.move(row, column, row + 1, column)
-              case _ =>
-            }
-            controller.publish(new ShowCand)
-          }
-        }
-      }
-  }
-  val candidates = new GridPanel(3, 3) {
-    setBackground(this)
-    contents ++= candidatelist
-  }
   contents += piece
 
   def redraw: Unit = {
     contents.clear()
-    if (clicked) {
-      contents += candidates
-    }else{
-      label.text = pieceText.toString
-      contents += piece
-    }
+    label.text = pieceText.toString
+    contents += piece
     repaint
   }
 

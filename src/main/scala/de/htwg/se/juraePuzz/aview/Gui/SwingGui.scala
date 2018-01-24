@@ -10,8 +10,6 @@ import scala.swing.event.{Event, MouseClicked}
 class SwingGui(controller: ControllerInterface) extends Frame{
   title = "juraePuzz"
 
-
-
   var cells = Array.ofDim[PiecePanel](controller.gridSize, controller.gridSize)
 
   def gridPanel = new GridPanel(controller.gridSize, controller.gridSize) {

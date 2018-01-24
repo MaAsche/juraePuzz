@@ -43,7 +43,7 @@ class Controller @Inject() (var grid: GridInterface) extends ControllerInterface
   toggleShow()
   }
 
-  def move(xS:Int, yS:Int, xT:Int, yT:Int) = {
+  def move(xS:Int, yS:Int, xT:Int, yT:Int): Unit = {
     if (undoManager.doStep(new SetCommand(xS, yS, xT, yT, this))) {
       if (new Solver(grid).check_level()) {
         gameStatus = SOLVED

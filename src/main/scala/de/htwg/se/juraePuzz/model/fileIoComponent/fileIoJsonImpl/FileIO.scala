@@ -64,10 +64,4 @@ class FileIO extends FileIOInterface {
       )
     )
   }
-  /*implicit val cellWrites = new Writes[GridInterface] {
-    def writes(grid: GridInterface) = Json.obj(
-      "value" -> .value
-    )
-  }*/
-
 }

@@ -5,7 +5,6 @@ import com.google.inject.Inject
 import com.google.inject.name.Named
 
 class Grid @Inject() (@Named("DefaultSize")size:Int) extends GridInterface {
-
   val matrix = Matrix(size)
 
   empty()
