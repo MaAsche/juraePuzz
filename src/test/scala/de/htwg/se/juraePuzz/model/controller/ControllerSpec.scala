@@ -43,8 +43,8 @@ class ControllerSpec extends WordSpec with Matchers {
     }
     "should have status solved with move" in {
       controller.create_empty_grid()
-      controller.create_Level(Level(Array(1,0,0,2)))
-      controller.move(1, 1, 0, 1)
+      controller.create_Level(Level(Array(1,2,0,3)))
+      controller.move(1, 1, 1, 0)
       controller.gameStatus should be (GameStatus.SOLVED)
     }
     "should have status illegal turn" in {
@@ -55,8 +55,8 @@ class ControllerSpec extends WordSpec with Matchers {
     }
     "should have status not solved yet" in {
       controller.create_empty_grid()
-      controller.create_Level()
-      controller.move(0, 1, 1, 1)
+      controller.create_Level(Level(Array(1,0,2,3)))
+      controller.move(1, 1, 0, 1)
       controller.gameStatus should be (GameStatus.NOT_SOLVED_YET)
     }
     "gamestatus should have a message" in {
@@ -69,8 +69,8 @@ class ControllerSpec extends WordSpec with Matchers {
     }
     "undo" in {
       controller.create_empty_grid()
-      controller.create_Level(Level(Array(1,0,0,2)))
-      controller.move(1, 1, 0, 1)
+      controller.create_Level(Level(Array(1,2,0,3)))
+      controller.move(1, 1, 1, 0)
       controller.undo
       controller.gameStatus should be (GameStatus.NOT_SOLVED_YET)
     }
@@ -93,7 +93,6 @@ class ControllerSpec extends WordSpec with Matchers {
       var controller = new Controller(grid)
       controller.create_Level()
       controller.save
-      println(controller.gridToString)
       controller.load
       controller.gameStatus should be (GameStatus.LOADED)
     }
