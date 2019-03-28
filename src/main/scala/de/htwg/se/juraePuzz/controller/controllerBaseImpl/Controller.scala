@@ -1,27 +1,26 @@
 package de.htwg.se.juraePuzz.controller.controllerBaseImpl
 
-import com.google.inject.name.Names
 import com.google.inject.{Guice, Inject}
-import net.codingwell.scalaguice.InjectorExtensions._
 import de.htwg.se.juraePuzz.JuraePuzzModule
 import de.htwg.se.juraePuzz.aview.Gui.CellChanged
-import de.htwg.se.juraePuzz.controller._
 import de.htwg.se.juraePuzz.controller.GameStatus._
+import de.htwg.se.juraePuzz.controller._
 import de.htwg.se.juraePuzz.model.GridInterface
 import de.htwg.se.juraePuzz.model.fileIoComponent.FileIOInterface
 import de.htwg.se.juraePuzz.model.gridBaseImpl._
 import de.htwg.se.juraePuzz.util._
+import net.codingwell.scalaguice.InjectorExtensions._
 
 import scala.swing.Publisher
 
-class Controller @Inject() (var grid: GridInterface) extends ControllerInterface with Publisher{
+class Controller @Inject()(var grid: GridInterface) extends ControllerInterface with Publisher {
 
   var gameStatus: GameStatus = IDLE
   val undoManager = new UndoManager
   val injector = Guice.createInjector(new JuraePuzzModule)
   val fileIo = injector.instance[FileIOInterface]
 
-  def create_empty_grid(): Unit ={
+  def create_empty_grid(): Unit = {
     grid.empty()
     toggleShow
   }
@@ -30,15 +29,15 @@ class Controller @Inject() (var grid: GridInterface) extends ControllerInterface
 
   def statusText: String = GameStatus.message(gameStatus)
 
-  def create_Level(): Unit ={
+  def create_Level(): Unit = {
     var st1 = new GetSpecifiedLevel()
     if (grid.fill(st1.createLevel(this))) {
       gameStatus = CREATE_LEVEL
     }
-  toggleShow()
+    toggleShow()
   }
 
-  def move(xS:Int, yS:Int, xT:Int, yT:Int): Unit = {
+  def move(xS: Int, yS: Int, xT: Int, yT: Int): Unit = {
     if (undoManager.doStep(new SetCommand(xS, yS, xT, yT, this))) {
       if (new Solver(grid).check_level()) {
         gameStatus = SOLVED
@@ -61,13 +60,13 @@ class Controller @Inject() (var grid: GridInterface) extends ControllerInterface
     toggleShow
   }
 
-  def solve(): Unit ={
+  def solve(): Unit = {
     grid.solve()
     gameStatus = SOLVED
     toggleShow()
   }
 
-  def create_Level(l:Level): Unit ={
+  def create_Level(l: Level): Unit = {
     grid.fill(l)
   }
 
@@ -94,7 +93,7 @@ class Controller @Inject() (var grid: GridInterface) extends ControllerInterface
 
   override def gridToString: String = grid.toString()
 
-  def gridSize:Int = grid.getSize()
+  def gridSize: Int = grid.getSize()
 
   def gridMatrix: Matrix = grid.getMatrix()
 }
